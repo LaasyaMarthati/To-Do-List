@@ -1,7 +1,8 @@
-
+ # Web- based To Do List Interface
+This is a web-based To Do List Interface.
   # Mobile Todo List Interface
 
-  This is a code bundle for Mobile Todo List Interface. The original project is available at https://www.figma.com/design/ZpfgOz9ScgZK6zCDW9TMYv/Mobile-Todo-List-Interface.
+  This is a code bundle for Mobile Todo List Interface. Itis available at https://www.figma.com/design/ZpfgOz9ScgZK6zCDW9TMYv/Mobile-Todo-List-Interface.
 
   ## Running the code
 
