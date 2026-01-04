@@ -1,15 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Todo App</title>
 
-  <!DOCTYPE html>
-  <html lang="en">
-    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Mobile Todo List Interface</title>
-    </head>
+<style>
+*{
+  box-sizing:border-box;
+  font-family:"Segoe UI",sans-serif;
+}
 
-    <body>
-      <div id="root"></div>
-      <script type="module" src="/src/main.tsx"></script>
-    </body>
-  </html>
-  
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#2563eb,#22c55e);
+}
+
+/* MENU BUTTON */
+.menu-btn{
+  position:fixed;
+  top:20px;
+  left:20px;
+  background:#111827;
+  color:white;
+  border:none;
+  width:48px;
+  height:48px;
+  border-radius:12px;
+  font-size:22px;
+  cursor:pointer;
+}
+
+/* MENU */
+.menu{
+  position:fixed;
+  top:80px;
+  left:20px;
+  width:190px;
+  background:white;
+  border-radius:12px;
+  box-shadow:0 20px 40px rgba(0,0,0,0.3);
+  display:none;
+  z-index:1000;
+}
+
+.menu button{
+  width:100%;
+  padding:12px;
+  border:none;
+  background:none;
+  font-size:15px;
+  text-align:left;
+  cursor:pointer;
+}
+
+.menu button:hover{
+  background:#e0f2fe;
+}
+
+/* CARD */
+.card{
+  width:95%;
+  max-width:520px;
+  background:white;
+  border-radius:18px;
+  padding:22px;
+  box-shadow:0 25px 50px rgba(0,0,0,0.25);
+}
+
+.hidden{display:none;}
+
+h2{text-align:center;color:#111827}
+
+/* INPUT */
+.input-area{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+input,select{
+  padding:10px;
+  border-radius:10px;
+  border:1px solid #cbd5e1;
+}
+
+.add-btn{
+  background:#111827;
+  color:white;
+  padding:12px;
+  border:none;
+  border-radius:12px;
+  font-size:16px;
+  cursor:pointer;
+}
+
+ul{
+  list-style:none;
+  padding:0;
+  margin-top:20px;
+}
+
+li{
+  background:#f8fafc;
+  padding:12px;
+  margin-bottom:10px;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+li.completed span{
+  text-decoration:line-through;
+  color:#64748b;
+}
+
+.priority-high{border-left:6px solid #ef4444;}
+.priority-medium{border-left:6px solid #f59e0b;}
+.priority-low{border-left:6px solid #22c55e;}
+
+span{flex:1;}
+
+.time{
+  font-size:12px;
+  color:#475569;
+}
+
+.delete{
+  background:#fb7185;
+  color:white;
+  border:none;
+  padding:6px 10px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+/* PROFILE */
+.profile-row{
+  display:flex;
+  gap:10px;
+  margin-bottom:15px;
+}
+
+.profile-row input{
+  flex:1;
+}
+
+.edit-btn{
+  background:#0ea5e9;
+  border:none;
+  padding:8px 10px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.save-btn{
+  background:#22c55e;
+  color:white;
+  border:none;
+  padding:10px;
+  border-radius:10px;
+  width:100%;
+  cursor:pointer;
+}
+
+/* YAY MESSAGE */
+#yay{
+  position:fixed;
+  bottom:30px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#111827;
+  color:white;
+  padding:14px 25px;
+  border-radius:30px;
+  font-weight:bold;
+  display:none;
+  z-index:9999;
+}
+
+/* CONFETTI */
+#confetti{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:9998;
+}
+
+.confetti{
+  position:absolute;
+  opacity:0.95;
+  animation:confettiFall linear forwards;
+}
+
+/* Dynamic animation for realistic blast */
+@keyframes confettiFall {
+  0% { transform: translate(0,0) rotate(0deg); opacity:1; }
+  30% { transform: translate(var(--x), var(--yUp)) rotate(var(--r1)); }
+  60% { transform: translate(calc(var(--x) * 0.6), var(--yDown)) rotate(var(--r2)); }
+  100% { transform: translate(var(--x), 100vh) rotate(var(--r3)); opacity:0; }
+}
+</style>
+</head>
+
+<body>
+
+<button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+<div class="menu" id="menu">
+  <button onclick="showSection('tasks')">📝 Tasks</button>
+  <button onclick="showSection('completed')">✅ Completed</button>
+  <button onclick="showSection('profile')">🙋‍♂ Profile</button>
+</div>
+
+<div class="card">
+
+<div id="tasks">
+  <h2>📝 Add Task</h2>
+
+  <div class="input-area">
+    <input id="taskText" placeholder="Task name">
+    <select id="priority">
+      <option value="high">🔥 Immediate</option>
+      <option value="medium">⚡ Medium</option>
+      <option value="low">🌿 Normal</option>
+    </select>
+    <input type="time" id="taskTime">
+    <button class="add-btn" onclick="addTask()">➕ Add Task</button>
+  </div>
+
+  <ul id="taskList"></ul>
+</div>
+
+<div id="completed" class="hidden">
+  <h2>🎉 Completed Tasks</h2>
+  <ul id="completedList"></ul>
+</div>
+
+<div id="profile" class="hidden">
+  <h2>🙋‍♂️ Profile</h2>
+
+  <div class="profile-row">
+    <input id="name" value="Your Name">
+    <button class="edit-btn">✏️</button>
+  </div>
+
+  <div class="profile-row">
+    <input id="email" value="email@example.com">
+    <button class="edit-btn">✏️</button>
+  </div>
+
+  <button class="save-btn">💾 Save</button>
+</div>
+
+</div>
+
+<div id="yay">🎉 Yayyy! Task is complete 🎉</div>
+<div id="confetti"></div>
+
+<script>
+const menu = document.getElementById("menu");
+const taskText = document.getElementById("taskText");
+const priority = document.getElementById("priority");
+const taskTime = document.getElementById("taskTime");
+const taskList = document.getElementById("taskList");
+const completedList = document.getElementById("completedList");
+const yay = document.getElementById("yay");
+const confetti = document.getElementById("confetti");
+
+function toggleMenu(){
+  menu.style.display = menu.style.display==="block"?"none":"block";
+}
+
+function showSection(id){
+  document.querySelectorAll(".card > div").forEach(d=>d.classList.add("hidden"));
+  document.getElementById(id).classList.remove("hidden");
+  menu.style.display="none";
+}
+
+function addTask(){
+  if(!taskText.value) return;
+
+  const li = document.createElement("li");
+  li.classList.add("priority-" + priority.value);
+
+  const cb = document.createElement("input");
+  cb.type = "checkbox";
+
+  const span = document.createElement("span");
+  span.textContent = taskText.value;
+
+  const time = document.createElement("div");
+  time.className="time";
+  time.textContent="⏰ "+taskTime.value;
+
+  const del = document.createElement("button");
+  del.textContent="🗑";
+  del.className="delete";
+  del.onclick = () => li.remove();
+
+  cb.onchange = () => {
+    if(cb.checked){
+      completedList.appendChild(li);
+      showYay();
+      launchConfetti();
+    }
+  };
+
+  li.append(cb, span, time, del);
+  taskList.appendChild(li);
+  taskText.value="";
+  taskTime.value="";
+}
+
+function showYay(){
+  yay.style.display="block";
+  setTimeout(()=>yay.style.display="none",2000);
+}
+
+function launchConfetti() {
+  const colors = ["#ef4444","#facc15","#22c55e","#38bdf8","#a855f7"];
+  const startY = window.innerHeight - 20;
+  const startX = window.innerWidth / 2;
+
+  for (let i = 0; i < 120; i++) {
+    const c = document.createElement("div");
+    c.className = "confetti";
+    const size = Math.random() * 8 + 6; // random size 6-14px
+    c.style.width = size + "px";
+    c.style.height = size * 1.5 + "px"; 
+    c.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
+
+    const spreadX = Math.random() * 600 - 300; // left/right
+    const yUp = -Math.random() * 300 - 150; // shoot up randomly
+    const yDown = -Math.random() * 150; // slight down during mid
+    const r1 = Math.random() * 360 + "deg";
+    const r2 = Math.random() * 360 + "deg";
+    const r3 = Math.random() * 720 + "deg";
+
+    c.style.left = startX + "px";
+    c.style.top = startY + "px";
+
+    c.style.setProperty("--x", spreadX + "px");
+    c.style.setProperty("--yUp", yUp + "px");
+    c.style.setProperty("--yDown", yDown + "px");
+    c.style.setProperty("--r1", r1);
+    c.style.setProperty("--r2", r2);
+    c.style.setProperty("--r3", r3);
+
+    c.style.animationDuration = (Math.random()*1.5+2.5)+"s";
+
+    confetti.appendChild(c);
+    setTimeout(()=>c.remove(), 4000);
+  }
+}
+</script>
+
+</body>
+</html>
