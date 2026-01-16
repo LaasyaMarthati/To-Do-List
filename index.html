@@ -3,13 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Smart Todo App</title>
+<title>Smart Todo App – Final</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  font-family:"Segoe UI",sans-serif;
-}
+*{box-sizing:border-box;font-family:"Segoe UI",sans-serif;}
 
 body{
   margin:0;
@@ -20,346 +17,282 @@ body{
   background:linear-gradient(135deg,#2563eb,#22c55e);
 }
 
-/* MENU BUTTON */
-.menu-btn{
+/* Top Buttons */
+.menu-btn,.dark-toggle{
   position:fixed;
-  top:20px;
-  left:20px;
   background:#111827;
   color:white;
   border:none;
-  width:48px;
-  height:48px;
   border-radius:12px;
-  font-size:22px;
   cursor:pointer;
 }
+.menu-btn{top:20px;left:20px;width:48px;height:48px;font-size:22px;}
+.dark-toggle{top:20px;right:20px;width:44px;height:44px;font-size:18px}
 
-/* MENU */
+/* Menu */
 .menu{
   position:fixed;
-  top:80px;
-  left:20px;
-  width:190px;
+  top:80px;left:20px;
+  width:210px;
   background:white;
   border-radius:12px;
-  box-shadow:0 20px 40px rgba(0,0,0,0.3);
   display:none;
-  z-index:1000;
+  box-shadow:0 20px 40px rgba(0,0,0,.3);
 }
-
 .menu button{
-  width:100%;
-  padding:12px;
-  border:none;
-  background:none;
-  font-size:15px;
-  text-align:left;
-  cursor:pointer;
+  width:100%;padding:12px;border:none;background:none;
+  text-align:left;font-size:15px;cursor:pointer;
 }
+.menu button:hover{background:#e0f2fe}
 
-.menu button:hover{
-  background:#e0f2fe;
-}
-
-/* CARD */
+/* Card */
 .card{
-  width:95%;
-  max-width:520px;
-  background:white;
-  border-radius:18px;
-  padding:22px;
-  box-shadow:0 25px 50px rgba(0,0,0,0.25);
+  width:95%;max-width:560px;
+  background:white;border-radius:18px;
+  padding:22px;box-shadow:0 25px 50px rgba(0,0,0,.25);
 }
-
-.hidden{display:none;}
+.hidden{display:none}
 
 h2{text-align:center;color:#111827}
+.stats{text-align:center;font-size:14px;color:#475569}
 
-/* INPUT */
-.input-area{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
+/* Inputs */
+.input-area{display:flex;flex-direction:column;gap:10px}
 input,select{
-  padding:10px;
-  border-radius:10px;
-  border:1px solid #cbd5e1;
+  padding:10px;border-radius:10px;border:1px solid #cbd5e1;
 }
-
 .add-btn{
-  background:#111827;
-  color:white;
-  padding:12px;
-  border:none;
-  border-radius:12px;
-  font-size:16px;
+  background:#111827;color:white;
+  padding:12px;border:none;border-radius:12px;
   cursor:pointer;
 }
 
-ul{
-  list-style:none;
-  padding:0;
-  margin-top:20px;
-}
-
+/* List */
+ul{list-style:none;padding:0;margin-top:20px}
 li{
-  background:#f8fafc;
-  padding:12px;
+  display:flex;align-items:center;gap:8px;
+  background:#f8fafc;padding:12px;border-radius:12px;
   margin-bottom:10px;
-  border-radius:12px;
-  display:flex;
-  align-items:center;
-  gap:10px;
 }
+.priority-high{border-left:6px solid #ef4444}
+.priority-medium{border-left:6px solid #f59e0b}
+.priority-low{border-left:6px solid #22c55e}
 
-li.completed span{
-  text-decoration:line-through;
-  color:#64748b;
+.sno{font-weight:bold;color:#475569;width:30px}
+span{flex:1}
+.time{font-size:12px;color:#475569}
+
+.action{
+  border:none;border-radius:8px;padding:6px 8px;cursor:pointer
 }
+.edit{background:#38bdf8;color:white}
+.delete{background:#fb7185;color:white}
 
-.priority-high{border-left:6px solid #ef4444;}
-.priority-medium{border-left:6px solid #f59e0b;}
-.priority-low{border-left:6px solid #22c55e;}
-
-span{flex:1;}
-
-.time{
-  font-size:12px;
-  color:#475569;
-}
-
-.delete{
-  background:#fb7185;
-  color:white;
-  border:none;
-  padding:6px 10px;
-  border-radius:8px;
-  cursor:pointer;
-}
-
-/* PROFILE */
+/* Profile */
 .profile-row{
-  display:flex;
-  gap:10px;
-  margin-bottom:15px;
+  display:flex;align-items:center;gap:8px;margin-bottom:12px;
 }
-
-.profile-row input{
-  flex:1;
+.profile-row input{flex:1}
+.edit-small{
+  width:36px;height:36px;
+  border:none;border-radius:8px;
+  background:#e5e7eb;cursor:pointer;
 }
-
-.edit-btn{
-  background:#0ea5e9;
-  border:none;
-  padding:8px 10px;
-  border-radius:8px;
-  cursor:pointer;
-}
-
 .save-btn{
-  background:#22c55e;
-  color:white;
-  border:none;
-  padding:10px;
-  border-radius:10px;
-  width:100%;
-  cursor:pointer;
+  width:100%;padding:12px;border:none;
+  background:#22c55e;color:white;border-radius:10px;
 }
 
-/* YAY MESSAGE */
+/* Toast */
 #yay{
-  position:fixed;
-  bottom:30px;
-  left:50%;
+  position:fixed;bottom:30px;left:50%;
   transform:translateX(-50%);
-  background:#111827;
-  color:white;
-  padding:14px 25px;
-  border-radius:30px;
-  font-weight:bold;
-  display:none;
-  z-index:9999;
+  background:#111827;color:white;
+  padding:14px 25px;border-radius:30px;
+  display:none;font-weight:bold;
 }
 
-/* CONFETTI */
-#confetti{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  overflow:hidden;
-  z-index:9998;
+/* Confetti */
+#confetti{position:fixed;inset:0;pointer-events:none}
+.confetti{position:absolute;animation:starBlast forwards}
+
+@keyframes starBlast{
+  0%{transform:translate(0,0) scale(0.3) rotate(0deg);opacity:0}
+  20%{opacity:1}
+  50%{transform:translate(var(--x),-45vh) scale(1) rotate(360deg)}
+  100%{transform:translate(calc(var(--x)*0.4),100vh) scale(0.5) rotate(900deg);opacity:0}
 }
 
-.confetti{
-  position:absolute;
-  opacity:0.95;
-  animation:confettiFall linear forwards;
-}
+/* Dark Mode */
+body.dark{background:#020617}
+body.dark .card,body.dark .menu{background:#020617;color:#e5e7eb}
+body.dark li{background:#020617;border:1px solid #1f2937}
+body.dark input,body.dark select{background:#020617;color:#e5e7eb}
 
-/* Dynamic animation for realistic blast */
-@keyframes confettiFall {
-  0% { transform: translate(0,0) rotate(0deg); opacity:1; }
-  30% { transform: translate(var(--x), var(--yUp)) rotate(var(--r1)); }
-  60% { transform: translate(calc(var(--x) * 0.6), var(--yDown)) rotate(var(--r2)); }
-  100% { transform: translate(var(--x), 100vh) rotate(var(--r3)); opacity:0; }
-}
 </style>
 </head>
 
 <body>
 
 <button class="menu-btn" onclick="toggleMenu()">☰</button>
+<button class="dark-toggle" onclick="toggleDark()">🌙</button>
 
 <div class="menu" id="menu">
-  <button onclick="showSection('tasks')">Tasks</button>
-  <button onclick="showSection('completed')">Completed</button>
-  <button onclick="showSection('profile')">Profile</button>
+  <button onclick="showSection('tasks')">📝 Tasks</button>
+  <button onclick="showSection('completed')">✅ Completed</button>
+  <button onclick="showSection('profile')">👤 Profile</button>
 </div>
 
 <div class="card">
+  <div id="tasks">
+    <h2>Smart Tasks</h2>
+    <div class="stats" id="stats"></div>
 
-<div id="tasks">
-  <h2>📝 Add Task</h2>
+    <div class="input-area">
+      <input id="taskText" placeholder="Task name">
+      <select id="priority">
+        <option value="high">🔥 High</option>
+        <option value="medium">⚡ Medium</option>
+        <option value="low">🌿 Low</option>
+      </select>
+      <input type="time" id="taskTime">
+      <button class="add-btn" onclick="addTask()">➕ Add Task</button>
+    </div>
 
-  <div class="input-area">
-    <input id="taskText" placeholder="Task name">
-    <select id="priority">
-      <option value="high">🔥 Immediate</option>
-      <option value="medium">⚡ Medium</option>
-      <option value="low">🌿 Normal</option>
-    </select>
-    <input type="time" id="taskTime">
-    <button class="add-btn" onclick="addTask()">➕ Add Task</button>
+    <ul id="taskList"></ul>
   </div>
 
-  <ul id="taskList"></ul>
-</div>
-
-<div id="completed" class="hidden">
-  <h2>🎉 Completed Tasks</h2>
-  <ul id="completedList"></ul>
-</div>
-
-<div id="profile" class="hidden">
-  <h2>Profile</h2>
-
-  <div class="profile-row">
-    <input id="name" value="Your Name">
-    <button class="edit-btn">✏️</button>
+  <div id="completed" class="hidden">
+    <h2>Completed Tasks</h2>
+    <ul id="completedList"></ul>
   </div>
 
-  <div class="profile-row">
-    <input id="email" value="email@example.com">
-    <button class="edit-btn">✏️</button>
+  <div id="profile" class="hidden">
+    <h2>User Profile</h2>
+
+    <div class="profile-row">
+      <input id="name" placeholder="Your Name" disabled>
+      <button class="edit-small" onclick="toggleEdit('name')">✏️</button>
+    </div>
+
+    <div class="profile-row">
+      <input id="email" placeholder="Your Email" disabled>
+      <button class="edit-small" onclick="toggleEdit('email')">✏️</button>
+    </div>
+
+    <button class="save-btn" onclick="saveProfile()">Save Profile</button>
   </div>
-
-  <button class="save-btn">Save</button>
 </div>
 
-</div>
-
-<div id="yay">🎉 Yayyy! Task is complete 🎉</div>
+<div id="yay">⭐ Task Completed!</div>
 <div id="confetti"></div>
 
 <script>
-const menu = document.getElementById("menu");
-const taskText = document.getElementById("taskText");
-const priority = document.getElementById("priority");
-const taskTime = document.getElementById("taskTime");
-const taskList = document.getElementById("taskList");
-const completedList = document.getElementById("completedList");
-const yay = document.getElementById("yay");
-const confetti = document.getElementById("confetti");
+const menu=document.getElementById('menu');
+const taskList=document.getElementById('taskList');
+const completedList=document.getElementById('completedList');
+const stats=document.getElementById('stats');
+const yay=document.getElementById('yay');
+const confetti=document.getElementById('confetti');
 
-function toggleMenu(){
-  menu.style.display = menu.style.display==="block"?"none":"block";
-}
+let tasks=JSON.parse(localStorage.getItem('tasks'))||[];
+let completed=JSON.parse(localStorage.getItem('completed'))||[];
 
+function toggleMenu(){menu.style.display=menu.style.display==='block'?'none':'block'}
 function showSection(id){
-  document.querySelectorAll(".card > div").forEach(d=>d.classList.add("hidden"));
-  document.getElementById(id).classList.remove("hidden");
-  menu.style.display="none";
+  document.querySelectorAll('.card>div').forEach(d=>d.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+  menu.style.display='none';
 }
+function toggleDark(){
+  document.body.classList.toggle('dark');
+  localStorage.setItem('dark',document.body.classList.contains('dark'));
+}
+if(localStorage.getItem('dark')==='true')document.body.classList.add('dark');
 
+function updateStats(){
+  stats.textContent=`Pending: ${tasks.length} | Completed: ${completed.length}`;
+}
+function saveData(){
+  localStorage.setItem('tasks',JSON.stringify(tasks));
+  localStorage.setItem('completed',JSON.stringify(completed));
+  updateStats();
+}
 function addTask(){
-  if(!taskText.value) return;
+  if(!taskText.value.trim())return alert('Enter task');
+  tasks.push({text:taskText.value,priority:priority.value,time:taskTime.value});
+  taskText.value='';taskTime.value='';
+  saveData();render();
+}
+function render(){
+  taskList.innerHTML='';completedList.innerHTML='';
+  tasks.forEach((t,i)=>createItem(t,i,false));
+  completed.forEach((t,i)=>createItem(t,i,true));
+}
+function createItem(t,i,isDone){
+  const li=document.createElement('li');
+  li.className=`priority-${t.priority}`;
+  const sno=document.createElement('div');
+  sno.className='sno';sno.textContent=i+1;
+  const span=document.createElement('span');
+  span.textContent=t.text;
+  const cb=document.createElement('input');
+  cb.type='checkbox';cb.checked=isDone;
 
-  const li = document.createElement("li");
-  li.classList.add("priority-" + priority.value);
+  li.append(sno,cb,span);
 
-  const cb = document.createElement("input");
-  cb.type = "checkbox";
+  if(t.time){
+    const tm=document.createElement('div');
+    tm.className='time';tm.textContent='⏰ '+t.time;
+    li.appendChild(tm);
+  }
 
-  const span = document.createElement("span");
-  span.textContent = taskText.value;
+  const del=document.createElement('button');
+  del.textContent='🗑';del.className='action delete';
+  del.onclick=()=>{isDone?completed.splice(i,1):tasks.splice(i,1);saveData();render()};
+  li.appendChild(del);
 
-  const time = document.createElement("div");
-  time.className="time";
-  time.textContent="⏰ "+taskTime.value;
-
-  const del = document.createElement("button");
-  del.textContent="🗑";
-  del.className="delete";
-  del.onclick = () => li.remove();
-
-  cb.onchange = () => {
-    if(cb.checked){
-      completedList.appendChild(li);
-      showYay();
-      launchConfetti();
+  cb.onchange=()=>{
+    if(cb.checked&&!isDone){
+      completed.unshift(tasks.splice(i,1)[0]);
+      showYay();launchConfetti();
     }
+    saveData();render();
   };
-
-  li.append(cb, span, time, del);
-  taskList.appendChild(li);
-  taskText.value="";
-  taskTime.value="";
+  (isDone?completedList:taskList).appendChild(li);
 }
-
-function showYay(){
-  yay.style.display="block";
-  setTimeout(()=>yay.style.display="none",2000);
-}
-
-function launchConfetti() {
-  const colors = ["#ef4444","#facc15","#22c55e","#38bdf8","#a855f7"];
-  const startY = window.innerHeight - 20;
-  const startX = window.innerWidth / 2;
-
-  for (let i = 0; i < 120; i++) {
-    const c = document.createElement("div");
-    c.className = "confetti";
-    const size = Math.random() * 8 + 6; // random size 6-14px
-    c.style.width = size + "px";
-    c.style.height = size * 1.5 + "px"; 
-    c.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
-
-    const spreadX = Math.random() * 600 - 300; // left/right
-    const yUp = -Math.random() * 300 - 150; // shoot up randomly
-    const yDown = -Math.random() * 150; // slight down during mid
-    const r1 = Math.random() * 360 + "deg";
-    const r2 = Math.random() * 360 + "deg";
-    const r3 = Math.random() * 720 + "deg";
-
-    c.style.left = startX + "px";
-    c.style.top = startY + "px";
-
-    c.style.setProperty("--x", spreadX + "px");
-    c.style.setProperty("--yUp", yUp + "px");
-    c.style.setProperty("--yDown", yDown + "px");
-    c.style.setProperty("--r1", r1);
-    c.style.setProperty("--r2", r2);
-    c.style.setProperty("--r3", r3);
-
-    c.style.animationDuration = (Math.random()*1.5+2.5)+"s";
-
-    confetti.appendChild(c);
-    setTimeout(()=>c.remove(), 4000);
+function showYay(){yay.style.display='block';setTimeout(()=>yay.style.display='none',2000)}
+function launchConfetti(){
+  const colors=['#fde68a','#fbbf24','#a7f3d0','#93c5fd','#e9d5ff'];
+  for(let i=0;i<60;i++){
+    const s=document.createElement('div');
+    s.className='confetti';
+    const size=Math.random()*10+6;
+    s.style.width=s.style.height=size+'px';
+    s.style.clipPath='polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)';
+    s.style.background=colors[Math.floor(Math.random()*colors.length)];
+    s.style.left=50+(Math.random()*10-5)+'%';
+    s.style.top='85%';
+    s.style.setProperty('--x',(Math.random()*600-300)+'px');
+    s.style.animationDuration=(Math.random()*1.5+2.5)+'s';
+    confetti.appendChild(s);
+    setTimeout(()=>s.remove(),4000);
   }
 }
+function toggleEdit(id){
+  const el=document.getElementById(id);
+  el.disabled=!el.disabled;
+  el.focus();
+}
+function saveProfile(){
+  localStorage.setItem('profile',JSON.stringify({name:name.value,email:email.value}));
+  alert('Profile Saved');
+}
+(function loadProfile(){
+  const p=JSON.parse(localStorage.getItem('profile'));
+  if(p){name.value=p.name||'';email.value=p.email||''}
+})();
+render();updateStats();
 </script>
 
 </body>
