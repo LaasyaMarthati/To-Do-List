@@ -7,135 +7,76 @@
 
 <style>
 *{box-sizing:border-box;font-family:"Segoe UI",sans-serif;}
-
 body{
-  margin:0;
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background:linear-gradient(135deg,#2563eb,#22c55e);
+  margin:0; min-height:100vh; display:flex; justify-content:center; align-items:center;
+  background:linear-gradient(135deg,#2563eb,#22c55e); color:black; transition: color 0.3s, background 0.3s;
 }
-
 /* Top Buttons */
-.menu-btn,.dark-toggle{
-  position:fixed;
-  background:#111827;
-  color:white;
-  border:none;
-  border-radius:12px;
-  cursor:pointer;
-}
+.menu-btn,.dark-toggle{position:fixed;background:#111827;color:white;border:none;border-radius:12px;cursor:pointer;}
 .menu-btn{top:20px;left:20px;width:48px;height:48px;font-size:22px;}
 .dark-toggle{top:20px;right:20px;width:44px;height:44px;font-size:18px}
 
 /* Menu */
-.menu{
-  position:fixed;
-  top:80px;left:20px;
-  width:210px;
-  background:white;
-  border-radius:12px;
-  display:none;
-  box-shadow:0 20px 40px rgba(0,0,0,.3);
-}
-.menu button{
-  width:100%;padding:12px;border:none;background:none;
-  text-align:left;font-size:15px;cursor:pointer;
-}
-.menu button:hover{background:#e0f2fe}
+.menu{position:fixed;top:80px;left:20px;width:210px;background:#1e3a8a;border-radius:12px;display:none;box-shadow:0 20px 40px rgba(0,0,0,.3);color:white;transition: background 0.3s,color 0.3s;}
+.menu button{width:100%;padding:12px;border:none;background:none;text-align:left;font-size:15px;cursor:pointer;color:inherit;}
+.menu button:hover{background:#3b82f6}
 
 /* Card */
-.card{
-  width:95%;max-width:560px;
-  background:white;border-radius:18px;
-  padding:22px;box-shadow:0 25px 50px rgba(0,0,0,.25);
-}
+.card{width:95%;max-width:560px;background:white;border-radius:18px;padding:22px;box-shadow:0 25px 50px rgba(0,0,0,.25);transition: background 0.3s,color 0.3s;}
 .hidden{display:none}
-
-h2{text-align:center;color:#111827}
-.stats{text-align:center;font-size:14px;color:#475569}
+h2{text-align:center;color:inherit}
+.stats{text-align:center;font-size:14px;color:inherit}
 
 /* Inputs */
 .input-area{display:flex;flex-direction:column;gap:10px}
-input,select{
-  padding:10px;border-radius:10px;border:1px solid #cbd5e1;
-}
-.add-btn{
-  background:#111827;color:white;
-  padding:12px;border:none;border-radius:12px;
-  cursor:pointer;
-}
+input,select{padding:10px;border-radius:10px;border:1px solid #cbd5e1;color:inherit;background:white;transition: background 0.3s,color 0.3s;}
+select option:hover{background:#3b82f6;color:white}
+.add-btn{background:#111827;color:white;padding:12px;border:none;border-radius:12px;cursor:pointer}
 
 /* List */
 ul{list-style:none;padding:0;margin-top:20px}
-li{
-  display:flex;align-items:center;gap:8px;
-  background:#f8fafc;padding:12px;border-radius:12px;
-  margin-bottom:10px;
-}
+li{display:flex;align-items:center;gap:8px;background:#f8fafc;padding:12px;border-radius:12px;margin-bottom:10px;color:inherit;transition: background 0.3s,color 0.3s;}
 .priority-high{border-left:6px solid #ef4444}
 .priority-medium{border-left:6px solid #f59e0b}
 .priority-low{border-left:6px solid #22c55e}
-
-.sno{font-weight:bold;color:#475569;width:30px}
+.sno{font-weight:bold;color:#1e3a8a; width:30px;} /* Dark blue numbering */
 span{flex:1}
-.time{font-size:12px;color:#475569}
-
-.action{
-  border:none;border-radius:8px;padding:6px 8px;cursor:pointer
-}
+.time{font-size:12px}
+.action{border:none;border-radius:8px;padding:6px 8px;cursor:pointer}
 .edit{background:#38bdf8;color:white}
 .delete{background:#fb7185;color:white}
 
 /* Profile */
-.profile-row{
-  display:flex;align-items:center;gap:8px;margin-bottom:12px;
-}
+.profile-row{display:flex;align-items:center;gap:8px;margin-bottom:12px}
 .profile-row input{flex:1}
-.edit-small{
-  width:36px;height:36px;
-  border:none;border-radius:8px;
-  background:#e5e7eb;cursor:pointer;
-}
-.save-btn{
-  width:100%;padding:12px;border:none;
-  background:#22c55e;color:white;border-radius:10px;
-}
+.edit-small{width:36px;height:36px;border:none;border-radius:8px;background:#e5e7eb;cursor:pointer;}
+.save-btn{width:100%;padding:12px;border:none;background:#22c55e;color:white;border-radius:10px}
 
 /* Toast */
-#yay{
-  position:fixed;bottom:30px;left:50%;
-  transform:translateX(-50%);
-  background:#111827;color:white;
-  padding:14px 25px;border-radius:30px;
-  display:none;font-weight:bold;
-}
+#yay{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#111827;color:white;padding:14px 25px;border-radius:30px;display:none;font-weight:bold}
 
 /* Confetti */
 #confetti{position:fixed;inset:0;pointer-events:none}
-.confetti{position:absolute;animation:starBlast forwards}
-
+.confetti{position:absolute;animation:starBlast forwards;}
 @keyframes starBlast{
   0%{transform:translate(0,0) scale(0.3) rotate(0deg);opacity:0}
   20%{opacity:1}
-  50%{transform:translate(var(--x),-45vh) scale(1) rotate(360deg)}
-  100%{transform:translate(calc(var(--x)*0.4),100vh) scale(0.5) rotate(900deg);opacity:0}
+  50%{transform:translate(var(--x),var(--y)) scale(1) rotate(360deg)}
+  100%{transform:translate(calc(var(--x)*0.5),100vh) scale(0.5) rotate(900deg);opacity:0}
 }
 
 /* Dark Mode */
-body.dark{background:#020617}
-body.dark .card,body.dark .menu{background:#020617;color:#e5e7eb}
-body.dark li{background:#020617;border:1px solid #1f2937}
-body.dark input,body.dark select{background:#020617;color:#e5e7eb}
-
+body.dark{background:#020617;color:white;}
+body.dark .card,body.dark .menu{background:#020617;color:white;}
+body.dark li{background:#020617;border:1px solid #1f2937;color:white;}
+body.dark input,body.dark select{background:#020617;color:white;border:1px solid #334155;}
+body.dark h2,.stats,.menu button,.sno,.time{color:white;}
 </style>
 </head>
-
 <body>
 
 <button class="menu-btn" onclick="toggleMenu()">☰</button>
-<button class="dark-toggle" onclick="toggleDark()">🌙</button>
+<button class="dark-toggle" id="darkToggle" onclick="toggleDark()">🌙</button>
 
 <div class="menu" id="menu">
   <button onclick="showSection('tasks')">📝 Tasks</button>
@@ -169,17 +110,14 @@ body.dark input,body.dark select{background:#020617;color:#e5e7eb}
 
   <div id="profile" class="hidden">
     <h2>User Profile</h2>
-
     <div class="profile-row">
       <input id="name" placeholder="Your Name" disabled>
       <button class="edit-small" onclick="toggleEdit('name')">✏️</button>
     </div>
-
     <div class="profile-row">
       <input id="email" placeholder="Your Email" disabled>
       <button class="edit-small" onclick="toggleEdit('email')">✏️</button>
     </div>
-
     <button class="save-btn" onclick="saveProfile()">Save Profile</button>
   </div>
 </div>
@@ -194,6 +132,7 @@ const completedList=document.getElementById('completedList');
 const stats=document.getElementById('stats');
 const yay=document.getElementById('yay');
 const confetti=document.getElementById('confetti');
+const darkToggle=document.getElementById('darkToggle');
 
 let tasks=JSON.parse(localStorage.getItem('tasks'))||[];
 let completed=JSON.parse(localStorage.getItem('completed'))||[];
@@ -206,94 +145,104 @@ function showSection(id){
 }
 function toggleDark(){
   document.body.classList.toggle('dark');
+  darkToggle.textContent=document.body.classList.contains('dark')?'☀️':'🌙';
   localStorage.setItem('dark',document.body.classList.contains('dark'));
 }
-if(localStorage.getItem('dark')==='true')document.body.classList.add('dark');
-
-function updateStats(){
-  stats.textContent=`Pending: ${tasks.length} | Completed: ${completed.length}`;
+if(localStorage.getItem('dark')==='true'){
+  document.body.classList.add('dark');
+  darkToggle.textContent='☀️';
 }
+
+function updateStats(){ stats.textContent=`Pending: ${tasks.length} | Completed: ${completed.length}`; }
 function saveData(){
   localStorage.setItem('tasks',JSON.stringify(tasks));
   localStorage.setItem('completed',JSON.stringify(completed));
   updateStats();
 }
 function addTask(){
-  if(!taskText.value.trim())return alert('Enter task');
+  if(!taskText.value.trim()) return alert('Enter task');
   tasks.push({text:taskText.value,priority:priority.value,time:taskTime.value});
-  taskText.value='';taskTime.value='';
-  saveData();render();
+  taskText.value=''; taskTime.value='';
+  saveData(); render();
 }
+
 function render(){
-  taskList.innerHTML='';completedList.innerHTML='';
+  taskList.innerHTML=''; completedList.innerHTML='';
   tasks.forEach((t,i)=>createItem(t,i,false));
   completed.forEach((t,i)=>createItem(t,i,true));
 }
+
 function createItem(t,i,isDone){
   const li=document.createElement('li');
   li.className=`priority-${t.priority}`;
-  const sno=document.createElement('div');
-  sno.className='sno';sno.textContent=i+1;
-  const span=document.createElement('span');
-  span.textContent=t.text;
-  const cb=document.createElement('input');
-  cb.type='checkbox';cb.checked=isDone;
+  const sno=document.createElement('div'); sno.className='sno'; sno.textContent=`${i+1}.`;
+  const span=document.createElement('span'); span.textContent=t.text;
+  const cb=document.createElement('input'); cb.type='checkbox'; cb.checked=isDone;
 
   li.append(sno,cb,span);
 
   if(t.time){
-    const tm=document.createElement('div');
-    tm.className='time';tm.textContent='⏰ '+t.time;
+    const tm=document.createElement('div'); tm.className='time'; tm.textContent='⏰ '+t.time;
     li.appendChild(tm);
   }
 
+  // Only allow edit for pending tasks
+  if(!isDone){
+    const editBtn=document.createElement('button');
+    editBtn.textContent='✏️';
+    editBtn.className='action edit';
+    editBtn.onclick=()=>{
+      const newText=prompt('Edit Task', t.text);
+      if(newText!==null && newText.trim()!==''){
+        t.text=newText.trim();
+        saveData(); render();
+      }
+    };
+    li.appendChild(editBtn);
+  }
+
   const del=document.createElement('button');
-  del.textContent='🗑';del.className='action delete';
-  del.onclick=()=>{isDone?completed.splice(i,1):tasks.splice(i,1);saveData();render()};
+  del.textContent='🗑'; del.className='action delete';
+  del.onclick=()=>{ isDone?completed.splice(i,1):tasks.splice(i,1); saveData(); render(); };
   li.appendChild(del);
 
   cb.onchange=()=>{
-    if(cb.checked&&!isDone){
+    if(cb.checked && !isDone){
       completed.unshift(tasks.splice(i,1)[0]);
-      showYay();launchConfetti();
+      showYay(); launchConfetti();
     }
-    saveData();render();
+    saveData(); render();
   };
+
   (isDone?completedList:taskList).appendChild(li);
 }
-function showYay(){yay.style.display='block';setTimeout(()=>yay.style.display='none',2000)}
+
+function showYay(){ yay.style.display='block'; setTimeout(()=>yay.style.display='none',2000) }
+
 function launchConfetti(){
   const colors=['#fde68a','#fbbf24','#a7f3d0','#93c5fd','#e9d5ff'];
+  const centerX=window.innerWidth/2;
+  const centerY=window.innerHeight;
   for(let i=0;i<60;i++){
-    const s=document.createElement('div');
-    s.className='confetti';
+    const s=document.createElement('div'); s.className='confetti';
     const size=Math.random()*10+6;
     s.style.width=s.style.height=size+'px';
     s.style.clipPath='polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)';
     s.style.background=colors[Math.floor(Math.random()*colors.length)];
-    s.style.left=50+(Math.random()*10-5)+'%';
-    s.style.top='85%';
-    s.style.setProperty('--x',(Math.random()*600-300)+'px');
-    s.style.animationDuration=(Math.random()*1.5+2.5)+'s';
-    confetti.appendChild(s);
+    s.style.left=centerX+'px'; s.style.top=centerY+'px';
+    const xOffset=Math.random()*600-300;
+    const yOffset=-(Math.random()*300+200);
+    s.style.setProperty('--x',xOffset+'px'); s.style.setProperty('--y',yOffset+'px');
+    s.style.animationDuration=(Math.random()*1.5+2.5)+'s'; confetti.appendChild(s);
     setTimeout(()=>s.remove(),4000);
   }
 }
-function toggleEdit(id){
-  const el=document.getElementById(id);
-  el.disabled=!el.disabled;
-  el.focus();
-}
-function saveProfile(){
-  localStorage.setItem('profile',JSON.stringify({name:name.value,email:email.value}));
-  alert('Profile Saved');
-}
-(function loadProfile(){
-  const p=JSON.parse(localStorage.getItem('profile'));
-  if(p){name.value=p.name||'';email.value=p.email||''}
-})();
-render();updateStats();
-</script>
 
+function toggleEdit(id){ const el=document.getElementById(id); el.disabled=!el.disabled; el.focus(); }
+function saveProfile(){ localStorage.setItem('profile',JSON.stringify({name:name.value,email:email.value})); alert('Profile Saved'); }
+(function loadProfile(){ const p=JSON.parse(localStorage.getItem('profile')); if(p){name.value=p.name||'';email.value=p.email||''} })();
+
+render(); updateStats();
+</script>
 </body>
 </html>
