@@ -7,39 +7,73 @@
 
 <style>
 *{box-sizing:border-box;font-family:"Segoe UI",sans-serif;}
+
 body{
   margin:0; min-height:100vh; display:flex; justify-content:center; align-items:center;
   background:linear-gradient(135deg,#2563eb,#22c55e); color:black; transition: color 0.3s, background 0.3s;
 }
+
 /* Top Buttons */
-.menu-btn,.dark-toggle{position:fixed;background:#111827;color:white;border:none;border-radius:12px;cursor:pointer;}
+.menu-btn,.dark-toggle{
+  position:fixed;
+  background:#111827;
+  color:white;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+}
 .menu-btn{top:20px;left:20px;width:48px;height:48px;font-size:22px;}
 .dark-toggle{top:20px;right:20px;width:44px;height:44px;font-size:18px}
 
 /* Menu */
-.menu{position:fixed;top:80px;left:20px;width:210px;background:#1e3a8a;border-radius:12px;display:none;box-shadow:0 20px 40px rgba(0,0,0,.3);color:white;transition: background 0.3s,color 0.3s;}
-.menu button{width:100%;padding:12px;border:none;background:none;text-align:left;font-size:15px;cursor:pointer;color:inherit;}
+.menu{
+  position:fixed; top:80px; left:20px;
+  width:210px; background:#1e3a8a; border-radius:12px;
+  display:none; box-shadow:0 20px 40px rgba(0,0,0,.3);
+  color:white; transition: background 0.3s,color 0.3s;
+}
+.menu button{
+  width:100%; padding:12px; border:none; background:none;
+  text-align:left; font-size:15px; cursor:pointer; color:inherit;
+}
 .menu button:hover{background:#3b82f6}
 
 /* Card */
-.card{width:95%;max-width:560px;background:white;border-radius:18px;padding:22px;box-shadow:0 25px 50px rgba(0,0,0,.25);transition: background 0.3s,color 0.3s;}
+.card{
+  width:95%; max-width:560px; background:white; border-radius:18px;
+  padding:22px; box-shadow:0 25px 50px rgba(0,0,0,.25); transition: background 0.3s,color 0.3s;
+}
 .hidden{display:none}
-h2{text-align:center;color:inherit}
-.stats{text-align:center;font-size:14px;color:inherit}
+h2{text-align:center; color:inherit}
+.stats{text-align:center;font-size:14px; color:inherit}
 
 /* Inputs */
 .input-area{display:flex;flex-direction:column;gap:10px}
-input,select{padding:10px;border-radius:10px;border:1px solid #cbd5e1;color:inherit;background:white;transition: background 0.3s,color 0.3s;}
+input,select{
+  padding:10px;border-radius:10px;border:1px solid #cbd5e1;
+  color:inherit; background:white; transition: background 0.3s,color 0.3s;
+}
 select option:hover{background:#3b82f6;color:white}
 .add-btn{background:#111827;color:white;padding:12px;border:none;border-radius:12px;cursor:pointer}
 
 /* List */
 ul{list-style:none;padding:0;margin-top:20px}
-li{display:flex;align-items:center;gap:8px;background:#f8fafc;padding:12px;border-radius:12px;margin-bottom:10px;color:inherit;transition: background 0.3s,color 0.3s;}
+li{
+  display:flex;align-items:center;gap:8px;background:#f8fafc;
+  padding:12px;border-radius:12px;margin-bottom:10px;
+  color:inherit; transition: background 0.3s,color 0.3s;
+}
 .priority-high{border-left:6px solid #ef4444}
 .priority-medium{border-left:6px solid #f59e0b}
 .priority-low{border-left:6px solid #22c55e}
-.sno{font-weight:bold;color:#1e3a8a; width:30px;} /* Dark blue numbering */
+
+/* Task Number */
+.sno{
+  font-weight:bold;
+  color:black;   /* Light mode */
+  width:30px;
+}
+
 span{flex:1}
 .time{font-size:12px}
 .action{border:none;border-radius:8px;padding:6px 8px;cursor:pointer}
@@ -53,7 +87,8 @@ span{flex:1}
 .save-btn{width:100%;padding:12px;border:none;background:#22c55e;color:white;border-radius:10px}
 
 /* Toast */
-#yay{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#111827;color:white;padding:14px 25px;border-radius:30px;display:none;font-weight:bold}
+#yay{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);
+background:#111827;color:white;padding:14px 25px;border-radius:30px;display:none;font-weight:bold}
 
 /* Confetti */
 #confetti{position:fixed;inset:0;pointer-events:none}
@@ -70,11 +105,19 @@ body.dark{background:#020617;color:white;}
 body.dark .card,body.dark .menu{background:#020617;color:white;}
 body.dark li{background:#020617;border:1px solid #1f2937;color:white;}
 body.dark input,body.dark select{background:#020617;color:white;border:1px solid #334155;}
-body.dark h2,.stats,.menu button,.sno,.time{color:white;}
+body.dark h2,
+body.dark .stats,
+body.dark .menu button,
+body.dark .time{
+  color:white;
+}
+body.dark .sno{
+  color:white;   /* Dark mode task number */
+}
 </style>
 </head>
-<body>
 
+<body>
 <button class="menu-btn" onclick="toggleMenu()">☰</button>
 <button class="dark-toggle" id="darkToggle" onclick="toggleDark()">🌙</button>
 
@@ -122,7 +165,7 @@ body.dark h2,.stats,.menu button,.sno,.time{color:white;}
   </div>
 </div>
 
-<div id="yay">⭐ Task Completed!</div>
+<div id="yay">⭐ Yay, Task Completed! ⭐</div>
 <div id="confetti"></div>
 
 <script>
@@ -186,7 +229,6 @@ function createItem(t,i,isDone){
     li.appendChild(tm);
   }
 
-  // Only allow edit for pending tasks
   if(!isDone){
     const editBtn=document.createElement('button');
     editBtn.textContent='✏️';
