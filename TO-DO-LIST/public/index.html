@@ -1,75 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Smart Tasks</title>
+  <meta charset="UTF-8">
+  <title>Smart Tasks</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- Icons (already used by you) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<!-- ☰ MENU BUTTON -->
-<button class="menu-btn" onclick="toggleMenu()">☰</button>
+<!-- ===== MAIN TASK CARD ===== -->
+<div class="card">
 
-<!-- 🌙 DARK MODE -->
-<button class="dark-toggle" id="darkBtn" onclick="toggleDark()">🌙</button>
+  <h2>Smart Tasks</h2>
+  <p class="stats">Pending: 1 | Completed: 2</p>
 
-<!-- 📋 LEFT MENU -->
-<div class="menu" id="menu">
-  <button onclick="closeMenu()">📝 Tasks</button>
-  <button onclick="logout()">🚪 Logout</button>
-  <button class="danger" onclick="deleteAccount()">🗑 Delete Account</button>
-</div>
+  <!-- INPUT SECTION -->
+  <div class="input-area">
+    <input type="text" placeholder="Task name" id="taskInput">
 
-<!-- 🔐 AUTH -->
-<div id="auth-section" class="auth-card">
-  <h3>Login / Signup</h3>
-  <input id="email" type="email" placeholder="Email">
-  <input id="password" type="password" placeholder="Password">
-  <div class="auth-buttons">
-    <button class="btn-secondary" onclick="signup()">Signup</button>
-    <button class="btn-primary" onclick="login()">Login</button>
+    <select id="priority">
+      <option value="high">🔥 High</option>
+      <option value="medium">⚡ Medium</option>
+      <option value="low">🌱 Low</option>
+    </select>
+
+    <input type="time" id="timeInput">
+
+    <button class="add-btn">
+      <i class="fa-solid fa-plus"></i> Add Task
+    </button>
   </div>
+
+  <!-- TASK LIST -->
+  <ul id="taskList">
+    <li class="task-item">
+      <span class="task-text">killing</span>
+
+      <div class="task-actions">
+        <button class="edit"><i class="fa-solid fa-pen"></i></button>
+        <button class="delete"><i class="fa-solid fa-trash"></i></button>
+      </div>
+    </li>
+  </ul>
+
 </div>
 
-<!-- ✅ APP -->
-<div id="app-section" style="display:none;">
-  <div class="card">
-
-    <h2>Smart Tasks</h2>
-
-    <div class="input-area">
-      <input id="todo-input" placeholder="Task name">
-
-      <select id="priority-select">
-        <option value="high">🔥 High</option>
-        <option value="medium">⚡ Medium</option>
-        <option value="low">🌿 Low</option>
-      </select>
-
-      <input type="datetime-local" id="due-date">
-
-      <button id="add-btn" class="add-btn">
-        <i class="fas fa-plus"></i> Add Task
-      </button>
-    </div>
-
-    <div class="filters">
-      <button class="filter-btn active" data-filter="all">All</button>
-      <button class="filter-btn" data-filter="active">Active</button>
-      <button class="filter-btn" data-filter="completed">Completed</button>
-    </div>
-
-    <p id="loading" class="hidden">Loading...</p>
-    <ul id="todo-list"></ul>
-    <p id="empty-msg" class="empty hidden">No tasks yet</p>
-
-  </div>
-</div>
-
-<script src="script.js"></script>
 </body>
 </html>
