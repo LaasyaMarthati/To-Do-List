@@ -11,116 +11,84 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: black;
-  transition: background 0.3s, color 0.3s;
+  transition: background 0.4s, color 0.4s;
 }
 
-/* ===== TOP BUTTONS ===== */
-.menu-btn, .dark-toggle {
+/* ===== DARK BUTTON ===== */
+.dark-toggle {
   position: fixed;
   top: 20px;
-  background: #111827;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-}
-
-.menu-btn {
-  left: 20px;
-  width: 48px;
-  height: 48px;
-  font-size: 22px;
-}
-
-.dark-toggle {
   right: 20px;
-  width: 44px;
-  height: 44px;
-  font-size: 18px;
-}
-
-/* ===== MENU ===== */
-.menu {
-  position: fixed;
-  top: 80px;
-  left: 20px;
-  width: 220px;
-  background: #1e3a8a;
-  border-radius: 12px;
-  padding: 12px;
+  width: 54px;
+  height: 54px;
+  font-size: 22px;
+  border-radius: 16px;
+  background: #020617;
   color: white;
-  box-shadow: 0 20px 40px rgba(0,0,0,.3);
-}
-
-.menu button {
-  width: 100%;
-  padding: 10px;
-  background: none;
   border: none;
-  color: white;
-  text-align: left;
   cursor: pointer;
+  z-index: 9999;
 }
 
-.menu button:hover {
-  background: #3b82f6;
-}
-
-/* ===== CARD (WIDER) ===== */
+/* ===== CARD (BIG & PREMIUM) ===== */
 .card {
-  width: 98%;
-  max-width: 720px;   /* ⬅ wider task view */
+  width: 95%;
+  max-width: 420px;
+  min-height: 520px;
   background: white;
-  border-radius: 18px;
-  padding: 26px;
-  box-shadow: 0 25px 50px rgba(0,0,0,.25);
-  transition: background 0.3s, color 0.3s;
+  border-radius: 28px;
+  padding: 32px 28px;
+  box-shadow: 0 30px 60px rgba(0,0,0,.25);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
-h2 {
+/* ===== HEADING ===== */
+.card h2 {
+  font-size: 28px;
+  font-weight: 700;
   text-align: center;
-}
-
-.hidden {
-  display: none;
 }
 
 /* ===== INPUT AREA ===== */
 .input-area {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 14px;
 }
 
 input, select {
-  padding: 10px;
-  border-radius: 10px;
+  padding: 14px;
+  font-size: 15px;
+  border-radius: 14px;
   border: 1px solid #cbd5e1;
 }
 
+/* ===== ADD BUTTON ===== */
 .add-btn {
-  background: #111827;
+  padding: 16px;
+  font-size: 16px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #020617, #1f2937);
   color: white;
-  padding: 12px;
   border: none;
-  border-radius: 12px;
   cursor: pointer;
 }
 
 /* ===== FILTERS ===== */
 .filters {
   display: flex;
-  gap: 6px;
-  margin-top: 15px;
+  gap: 10px;
 }
 
 .filter-btn {
   flex: 1;
-  padding: 8px;
-  border-radius: 8px;
+  padding: 10px;
+  border-radius: 12px;
   border: none;
   cursor: pointer;
+  background: #f1f5f9;
 }
 
 .filter-btn.active {
@@ -128,22 +96,20 @@ input, select {
   color: white;
 }
 
-/* ===== TODO LIST ===== */
+/* ===== TASK LIST ===== */
 ul {
   list-style: none;
   padding: 0;
-  margin-top: 20px;
 }
 
 li {
-  display: flex;
-  align-items: center;
-  gap: 12px;
   background: #f8fafc;
-  padding: 14px 16px;
+  padding: 14px;
   border-radius: 14px;
-  margin-bottom: 12px;
-  font-size: 16px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 li.completed {
@@ -151,94 +117,52 @@ li.completed {
   color: gray;
 }
 
-/* ===== LEFT SIDE ===== */
-.todo-left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex: 1;
-}
-
-.todo-text-wrapper span {
-  font-size: 16px;
-  line-height: 1.4;
-}
-
-/* ===== PRIORITY DOT ===== */
-.priority-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-}
-
-.priority-dot.low { background: #22c55e; }
-.priority-dot.medium { background: #f59e0b; }
-.priority-dot.high { background: #ef4444; }
-
-/* ===== ACTION BUTTONS ===== */
-.todo-actions button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-}
-
 /* ===== AUTH ===== */
 .auth-card {
   background: white;
-  padding: 25px;
-  width: 320px;
-  border-radius: 15px;
-  box-shadow: 0 20px 40px rgba(0,0,0,.25);
+  padding: 28px;
+  width: 340px;
+  border-radius: 20px;
+  box-shadow: 0 30px 60px rgba(0,0,0,.25);
   text-align: center;
 }
 
 .auth-card input {
   width: 100%;
-  padding: 10px;
   margin: 10px 0;
-  border-radius: 8px;
-  border: 1px solid #ccc;
 }
 
 .auth-buttons {
   display: flex;
-  gap: 10px;
+  gap: 12px;
 }
 
 .btn-primary {
   flex: 1;
-  padding: 10px;
+  padding: 12px;
+  border-radius: 10px;
   background: #2563eb;
   color: white;
   border: none;
-  border-radius: 8px;
 }
 
 .btn-secondary {
   flex: 1;
-  padding: 10px;
+  padding: 12px;
+  border-radius: 10px;
   background: #6b7280;
   color: white;
   border: none;
-  border-radius: 8px;
 }
 
 /* ===== DARK MODE ===== */
 body.dark {
-  background: #020617;
+  background: linear-gradient(135deg, #020617, #0f172a);
   color: white;
 }
 
 body.dark .card {
   background: #020617;
-  color: white;
-}
-
-body.dark li {
-  background: #020617;
-  border: 1px solid #1f2937;
-  color: white;
 }
 
 body.dark input,
@@ -248,15 +172,15 @@ body.dark select {
   border: 1px solid #334155;
 }
 
-body.dark .menu {
+body.dark li {
   background: #020617;
+  border: 1px solid #1f2937;
 }
 
-body.dark .filter-btn {
-  background: #1f2937;
-  color: white;
+body.dark .add-btn {
+  background: linear-gradient(135deg, #2563eb, #22c55e);
 }
 
-body.dark .filter-btn.active {
-  background: #2563eb;
+.hidden {
+  display: none;
 }
