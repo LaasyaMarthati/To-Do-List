@@ -3,7 +3,7 @@
   font-family: "Segoe UI", sans-serif;
 }
 
-/* ===== BODY ===== */
+/* ===== PAGE ===== */
 body {
   margin: 0;
   min-height: 100vh;
@@ -11,32 +11,15 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: background 0.4s, color 0.4s;
 }
 
-/* ===== DARK BUTTON ===== */
-.dark-toggle {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  width: 50px;
-  height: 50px;
-  font-size: 20px;
-  border-radius: 14px;
-  background: #020617;
-  color: #facc15;
-  border: none;
-  cursor: pointer;
-  z-index: 9999;
-}
-
-/* ===== MAIN CARD ===== */
+/* ===== MAIN CARD (MIDDLE & WIDE) ===== */
 .card {
   width: 95%;
-  max-width: 720px;
-  background: #ffffff;
+  max-width: 780px;   /* wider horizontally */
+  background: white;
   border-radius: 32px;
-  padding: 36px 42px;
+  padding: 36px 44px;
   box-shadow: 0 30px 60px rgba(0,0,0,.25);
 }
 
@@ -44,119 +27,90 @@ body {
 .card h2 {
   text-align: center;
   font-size: 32px;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
-/* ===== STATS ===== */
 .stats {
   text-align: center;
   font-size: 15px;
   margin-bottom: 26px;
-  color: #111827;
 }
 
-/* ===== INPUT AREA ===== */
+/* ===== INPUT AREA ORDERED ===== */
 .input-area {
   display: flex;
   flex-direction: column;
   gap: 18px;
-  margin-bottom: 26px;
+  margin-bottom: 30px;
 }
 
 .input-area input,
 .input-area select {
-  width: 100%;
   padding: 18px 20px;
+  font-size: 16px;
   border-radius: 18px;
   border: 1px solid #cbd5e1;
-  font-size: 16px;
-  background: white;
-  outline: none;
+  width: 100%;
 }
 
-/* ===== ADD TASK BUTTON (MATCHES BACKGROUND) ===== */
+/* ===== ADD BUTTON ===== */
 .add-btn {
-  margin-top: 8px;
   padding: 18px;
   font-size: 18px;
   border-radius: 22px;
   border: none;
   cursor: pointer;
   color: white;
-  background: linear-gradient(135deg, #2563eb, #22c55e);
-  box-shadow: 0 10px 25px rgba(0,0,0,.25);
-}
-
-/* ===== FILTERS ===== */
-.filters {
+  background: linear-gradient(135deg, #0f172a, #020617);
   display: flex;
-  gap: 12px;
-  margin-bottom: 18px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 }
 
-.filter-btn {
-  flex: 1;
-  padding: 12px;
-  border-radius: 14px;
-  border: none;
-  background: #f1f5f9;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.filter-btn.active {
-  background: #2563eb;
-  color: white;
-}
-
-/* ===== LIST ===== */
+/* ===== TASK LIST ===== */
 ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 /* ===== TASK ITEM ===== */
-li {
+.task-item {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 18px 20px;
+  justify-content: space-between;
+  padding: 18px 20px 18px 26px;
   background: #f8fafc;
   border-radius: 20px;
   margin-bottom: 14px;
-  position: relative;
 }
 
-/* LEFT COLOR STRIP */
-li::before {
+/* LEFT BAR — ONLY FOR TASKS */
+.task-item::before {
   content: "";
   position: absolute;
   left: 0;
   top: 0;
-  height: 100%;
   width: 6px;
-  border-radius: 20px 0 0 20px;
+  height: 100%;
   background: #ef4444;
-}
-
-/* COMPLETED */
-li.completed {
-  text-decoration: line-through;
-  color: #6b7280;
-}
-
-li.completed::before {
-  background: #22c55e;
+  border-radius: 20px 0 0 20px;
 }
 
 /* TASK TEXT */
-li span {
-  flex: 1;
+.task-text {
   font-size: 16px;
 }
 
-/* ===== ACTION BUTTONS ===== */
-li button {
+/* ACTION BUTTONS */
+.task-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.task-actions button {
   width: 40px;
   height: 40px;
   border-radius: 12px;
@@ -167,83 +121,18 @@ li button {
   justify-content: center;
 }
 
-li button:first-of-type {
+.task-actions .edit {
   background: #38bdf8;
   color: white;
 }
 
-li button:last-of-type {
+.task-actions .delete {
   background: #fb7185;
   color: white;
 }
 
-/* ===== AUTH CARD ===== */
-.auth-card {
-  background: white;
-  padding: 30px;
-  width: 360px;
-  border-radius: 26px;
-  box-shadow: 0 30px 60px rgba(0,0,0,.25);
-  text-align: center;
+/* ===== LOGIN PAGE SAFETY ===== */
+/* No task-item styles apply to login page */
+.auth-card::before {
+  display: none;
 }
-
-.auth-card input {
-  width: 100%;
-  padding: 14px;
-  margin: 10px 0;
-  border-radius: 14px;
-  border: 1px solid #cbd5e1;
-}
-
-/* ===== AUTH BUTTONS ===== */
-.auth-buttons {
-  display: flex;
-  gap: 12px;
-}
-
-.btn-primary,
-.btn-secondary {
-  flex: 1;
-  padding: 14px;
-  border-radius: 12px;
-  border: none;
-  color: white;
-  cursor: pointer;
-}
-
-.btn-primary {
-  background: #2563eb;
-}
-
-.btn-secondary {
-  background: #6b7280;
-}
-
-/* ===== DARK MODE ===== */
-body.dark {
-  background: linear-gradient(135deg, #020617, #0f172a);
-  color: white;
-}
-
-body.dark .card,
-body.dark .auth-card {
-  background: #020617;
-  color: white;
-}
-
-body.dark input,
-body.dark select {
-  background: #020617;
-  color: white;
-  border: 1px solid #334155;
-}
-
-body.dark li {
-  background: #020617;
-  border: 1px solid #1f2937;
-}
-
-/* ADD TASK BUTTON IN DARK MODE = BACKGROUND SHADES */
-body.dark .add-btn {
-  background: linear-gradient(135deg, #020617, #0f172a);
-  box-shadow: 0 10px
