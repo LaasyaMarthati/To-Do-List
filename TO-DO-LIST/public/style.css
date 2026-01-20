@@ -3,6 +3,7 @@
   font-family: "Segoe UI", sans-serif;
 }
 
+/* ===== BODY ===== */
 body {
   margin: 0;
   min-height: 100vh;
@@ -10,16 +11,16 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: background .4s, color .4s;
+  transition: background 0.4s, color 0.4s;
 }
 
-/* 🌙 DARK BUTTON */
+/* ===== DARK BUTTON ===== */
 .dark-toggle {
   position: fixed;
   top: 20px;
   right: 20px;
-  width: 52px;
-  height: 52px;
+  width: 54px;
+  height: 54px;
   font-size: 22px;
   border-radius: 16px;
   background: #020617;
@@ -29,56 +30,66 @@ body {
   z-index: 9999;
 }
 
-/* 🔲 MAIN CARD (WIDE RECTANGLE) */
+/* ===== DASHBOARD HEADER ===== */
+.dashboard-header {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  gap: 12px;
+}
+
+.dashboard-btn {
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  background: #2563eb;
+  color: white;
+  font-size: 14px;
+}
+
+.dashboard-btn.danger {
+  background: #dc2626;
+}
+
+/* ===== CARD (WIDE & SHORT) ===== */
 .card {
-  width: 90%;
-  max-width: 720px;   /* ✅ BIG WIDTH */
+  width: 90%;          /* long horizontally */
+  max-width: 1200px;   /* wide dashboard style */
+  min-height: 400px;   /* shorter vertically */
   background: white;
-  border-radius: 26px;
-  padding: 30px 36px;
+  border-radius: 20px;
+  padding: 40px 32px;
   box-shadow: 0 30px 60px rgba(0,0,0,.25);
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 20px;
 }
 
-/* HEADER */
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.card-header h2 {
+/* ===== HEADING ===== */
+.card h2 {
   font-size: 28px;
   font-weight: 700;
+  text-align: center;
 }
 
-.account-actions button {
-  background: transparent;
-  border: none;
-  font-size: 18px;
-  margin-left: 10px;
-  cursor: pointer;
-}
-
-/* INPUTS */
+/* ===== INPUT AREA ===== */
 .input-area {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1.2fr;
+  display: flex;
+  flex-direction: column;
   gap: 14px;
 }
 
-.input-area input,
-.input-area select {
+input, select {
   padding: 14px;
   font-size: 15px;
   border-radius: 14px;
   border: 1px solid #cbd5e1;
 }
 
+/* ===== ADD BUTTON ===== */
 .add-btn {
-  grid-column: span 3;
   padding: 16px;
   font-size: 16px;
   border-radius: 16px;
@@ -88,15 +99,15 @@ body {
   cursor: pointer;
 }
 
-/* FILTERS */
+/* ===== FILTERS ===== */
 .filters {
   display: flex;
-  gap: 12px;
+  gap: 10px;
 }
 
 .filter-btn {
   flex: 1;
-  padding: 12px;
+  padding: 10px;
   border-radius: 12px;
   border: none;
   cursor: pointer;
@@ -108,7 +119,7 @@ body {
   color: white;
 }
 
-/* LIST */
+/* ===== TASK LIST ===== */
 ul {
   list-style: none;
   padding: 0;
@@ -116,11 +127,12 @@ ul {
 
 li {
   background: #f8fafc;
-  padding: 16px;
+  padding: 14px;
   border-radius: 14px;
   margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 li.completed {
@@ -128,17 +140,45 @@ li.completed {
   color: gray;
 }
 
-/* AUTH */
+/* ===== AUTH ===== */
 .auth-card {
   background: white;
   padding: 28px;
-  width: 360px;
+  width: 340px;
   border-radius: 20px;
   box-shadow: 0 30px 60px rgba(0,0,0,.25);
   text-align: center;
 }
 
-/* DARK MODE */
+.auth-card input {
+  width: 100%;
+  margin: 10px 0;
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-primary {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  background: #2563eb;
+  color: white;
+  border: none;
+}
+
+.btn-secondary {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  background: #6b7280;
+  color: white;
+  border: none;
+}
+
+/* ===== DARK MODE ===== */
 body.dark {
   background: linear-gradient(135deg, #020617, #0f172a);
   color: white;
