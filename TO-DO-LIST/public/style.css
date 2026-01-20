@@ -1,1 +1,186 @@
-* { box-sizing: border-box; font-family: "Segoe UI", sans-serif; } /* ===== BODY ===== */ body { margin: 0; min-height: 100vh; background: linear-gradient(135deg, #2563eb, #22c55e); display: flex; justify-content: center; align-items: center; transition: background 0.4s, color 0.4s; } /* ===== DARK BUTTON ===== */ .dark-toggle { position: fixed; top: 20px; right: 20px; width: 54px; height: 54px; font-size: 22px; border-radius: 16px; background: #020617; color: white; border: none; cursor: pointer; z-index: 9999; } /* ===== CARD (BIG & PREMIUM) ===== */ .card { width: 95%; max-width: 420px; min-height: 520px; background: white; border-radius: 28px; padding: 32px 28px; box-shadow: 0 30px 60px rgba(0,0,0,.25); display: flex; flex-direction: column; gap: 18px; } /* ===== HEADING ===== */ .card h2 { font-size: 28px; font-weight: 700; text-align: center; } /* ===== INPUT AREA ===== */ .input-area { display: flex; flex-direction: column; gap: 14px; } input, select { padding: 14px; font-size: 15px; border-radius: 14px; border: 1px solid #cbd5e1; } /* ===== ADD BUTTON ===== */ .add-btn { padding: 16px; font-size: 16px; border-radius: 16px; background: linear-gradient(135deg, #020617, #1f2937); color: white; border: none; cursor: pointer; } /* ===== FILTERS ===== */ .filters { display: flex; gap: 10px; } .filter-btn { flex: 1; padding: 10px; border-radius: 12px; border: none; cursor: pointer; background: #f1f5f9; } .filter-btn.active { background: #2563eb; color: white; } /* ===== TASK LIST ===== */ ul { list-style: none; padding: 0; } li { background: #f8fafc; padding: 14px; border-radius: 14px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; } li.completed { text-decoration: line-through; color: gray; } /* ===== AUTH ===== */ .auth-card { background: white; padding: 28px; width: 340px; border-radius: 20px; box-shadow: 0 30px 60px rgba(0,0,0,.25); text-align: center; } .auth-card input { width: 100%; margin: 10px 0; } .auth-buttons { display: flex; gap: 12px; } .btn-primary { flex: 1; padding: 12px; border-radius: 10px; background: #2563eb; color: white; border: none; } .btn-secondary { flex: 1; padding: 12px; border-radius: 10px; background: #6b7280; color: white; border: none; } /* ===== DARK MODE ===== */ body.dark { background: linear-gradient(135deg, #020617, #0f172a); color: white; } body.dark .card { background: #020617; } body.dark input, body.dark select { background: #020617; color: white; border: 1px solid #334155; } body.dark li { background: #020617; border: 1px solid #1f2937; } body.dark .add-btn { background: linear-gradient(135deg, #2563eb, #22c55e); } .hidden { display: none; }
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* ===== BODY ===== */
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #2563eb, #22c55e);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.4s, color 0.4s;
+}
+
+/* ===== DARK BUTTON ===== */
+.dark-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 54px;
+  height: 54px;
+  font-size: 22px;
+  border-radius: 16px;
+  background: #020617;
+  color: white;
+  border: none;
+  cursor: pointer;
+  z-index: 9999;
+}
+
+/* ===== CARD (BIG & PREMIUM) ===== */
+.card {
+  width: 95%;
+  max-width: 420px;
+  min-height: 520px;
+  background: white;
+  border-radius: 28px;
+  padding: 32px 28px;
+  box-shadow: 0 30px 60px rgba(0,0,0,.25);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ===== HEADING ===== */
+.card h2 {
+  font-size: 28px;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* ===== INPUT AREA ===== */
+.input-area {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+input, select {
+  padding: 14px;
+  font-size: 15px;
+  border-radius: 14px;
+  border: 1px solid #cbd5e1;
+}
+
+/* ===== ADD BUTTON ===== */
+.add-btn {
+  padding: 16px;
+  font-size: 16px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #020617, #1f2937);
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+/* ===== FILTERS ===== */
+.filters {
+  display: flex;
+  gap: 10px;
+}
+
+.filter-btn {
+  flex: 1;
+  padding: 10px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  background: #f1f5f9;
+}
+
+.filter-btn.active {
+  background: #2563eb;
+  color: white;
+}
+
+/* ===== TASK LIST ===== */
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  background: #f8fafc;
+  padding: 14px;
+  border-radius: 14px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+li.completed {
+  text-decoration: line-through;
+  color: gray;
+}
+
+/* ===== AUTH ===== */
+.auth-card {
+  background: white;
+  padding: 28px;
+  width: 340px;
+  border-radius: 20px;
+  box-shadow: 0 30px 60px rgba(0,0,0,.25);
+  text-align: center;
+}
+
+.auth-card input {
+  width: 100%;
+  margin: 10px 0;
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-primary {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  background: #2563eb;
+  color: white;
+  border: none;
+}
+
+.btn-secondary {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  background: #6b7280;
+  color: white;
+  border: none;
+}
+
+/* ===== DARK MODE ===== */
+body.dark {
+  background: linear-gradient(135deg, #020617, #0f172a);
+  color: white;
+}
+
+body.dark .card {
+  background: #020617;
+}
+
+body.dark input,
+body.dark select {
+  background: #020617;
+  color: white;
+  border: 1px solid #334155;
+}
+
+body.dark li {
+  background: #020617;
+  border: 1px solid #1f2937;
+}
+
+body.dark .add-btn {
+  background: linear-gradient(135deg, #2563eb, #22c55e);
+}
+
+.hidden {
+  display: none;
+}
