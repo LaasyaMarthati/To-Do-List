@@ -1,80 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Smart Tasks</title>
-
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Tasks</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-
 <body>
 
-<!-- 🌙 DARK MODE -->
-<button class="dark-toggle" id="darkBtn" onclick="toggleDark()">🌙</button>
+  <!-- 🌙 DARK MODE BUTTON -->
+  <button class="dark-toggle" id="darkBtn" onclick="toggleDark()">🌙</button>
 
-<!-- 🔐 AUTH -->
-<div id="auth-section" class="auth-card">
-  <h3>Login / Signup</h3>
-  <input id="email" type="email" placeholder="Email">
-  <input id="password" type="password" placeholder="Password">
+  <!-- 🔐 AUTH SECTION -->
+  <div id="auth-section" class="auth-card">
+    <h3>Login / Signup</h3>
+    <input id="email" type="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Password">
 
-  <div class="auth-buttons">
-    <button class="btn-secondary" onclick="signup()">Signup</button>
-    <button class="btn-primary" onclick="login()">Login</button>
+    <div class="auth-buttons">
+      <button class="btn-secondary" onclick="signup()">Signup</button>
+      <button class="btn-primary" onclick="login()">Login</button>
+    </div>
   </div>
-</div>
 
-<!-- ✅ APP -->
-<div id="app-section" style="display:none;">
-  <div class="card">
+  <!-- ✅ APP SECTION -->
+  <div id="app-section" style="display:none;">
+    <div class="dashboard-header">
+      <button class="dashboard-btn" onclick="logout()">🚪 Logout</button>
+      <button class="dashboard-btn danger" onclick="deleteAccount()">🗑️ Delete Account</button>
+    </div>
 
-    <!-- HEADER -->
-    <div class="card-header">
+    <div class="card">
       <h2>Smart Tasks</h2>
-      <div class="account-actions">
-        <button onclick="logout()" title="Logout">
-          <i class="fas fa-sign-out-alt"></i>
-        </button>
-        <button onclick="deleteAccount()" title="Delete Account">
-          <i class="fas fa-user-slash"></i>
+
+      <div class="input-area">
+        <input id="todo-input" placeholder="Task name">
+
+        <select id="priority-select">
+          <option value="high">🔥 High</option>
+          <option value="medium">⚡ Medium</option>
+          <option value="low">🌿 Low</option>
+        </select>
+
+        <input type="datetime-local" id="due-date">
+
+        <button id="add-btn" class="add-btn">
+          <i class="fas fa-plus"></i> Add Task
         </button>
       </div>
+
+      <div class="filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="active">Active</button>
+        <button class="filter-btn" data-filter="completed">Completed</button>
+      </div>
+
+      <p id="loading" class="hidden">Loading...</p>
+      <ul id="todo-list"></ul>
+      <p id="empty-msg" class="empty hidden">No tasks yet</p>
     </div>
-
-    <!-- INPUTS -->
-    <div class="input-area">
-      <input id="todo-input" placeholder="Enter task name">
-
-      <select id="priority-select">
-        <option value="high">🔥 High</option>
-        <option value="medium">⚡ Medium</option>
-        <option value="low">🌿 Low</option>
-      </select>
-
-      <input type="datetime-local" id="due-date">
-
-      <button id="add-btn" class="add-btn">
-        <i class="fas fa-plus"></i> Add Task
-      </button>
-    </div>
-
-    <!-- FILTERS -->
-    <div class="filters">
-      <button class="filter-btn active" data-filter="all">All</button>
-      <button class="filter-btn" data-filter="active">Active</button>
-      <button class="filter-btn" data-filter="completed">Completed</button>
-    </div>
-
-    <!-- LIST -->
-    <p id="loading" class="hidden">Loading...</p>
-    <ul id="todo-list"></ul>
-    <p id="empty-msg" class="empty hidden">No tasks yet</p>
-
   </div>
-</div>
 
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
