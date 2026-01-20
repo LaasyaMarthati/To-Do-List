@@ -16,12 +16,10 @@ const emptyMsg = document.getElementById("empty-msg");
 let todos = [];
 let currentFilter = "all";
 
-/* ===== TOKEN ===== */
-function getToken() {
-  return localStorage.getItem("token");
-}
+/* TOKEN */
+const getToken = () => localStorage.getItem("token");
 
-/* ===== DARK MODE ===== */
+/* 🌙 DARK MODE */
 function toggleDark() {
   document.body.classList.toggle("dark");
   const isDark = document.body.classList.contains("dark");
@@ -29,66 +27,64 @@ function toggleDark() {
   localStorage.setItem("darkMode", isDark);
 }
 
-window.addEventListener("DOMContentLoaded", () => {
+window.onload = () => {
   if (localStorage.getItem("darkMode") === "true") {
     document.body.classList.add("dark");
     document.getElementById("darkBtn").textContent = "☀️";
   }
   updateAuthUI();
   if (getToken()) fetchTodos();
-});
+};
 
-/* ===== AUTH UI ===== */
+/* AUTH UI */
 function updateAuthUI() {
-  if (getToken()) {
-    authSection.style.display = "none";
-    appSection.style.display = "block";
-  } else {
-    authSection.style.display = "block";
-    appSection.style.display = "none";
-  }
+  authSection.style.display = getToken() ? "none" : "block";
+  appSection.style.display = getToken() ? "block" : "none";
 }
 
-/* ===== AUTH ===== */
+/* AUTH */
 async function signup() {
-  const email = emailInput.value.trim();
-  const password = passwordInput.value.trim();
-  if (!email || !password) return alert("Enter credentials");
-
   const res = await fetch("/api/auth/signup", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password })
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({ email: emailInput.value, password: passwordInput.value })
   });
-
   const data = await res.json();
-  if (!res.ok) return alert(data.message);
-
   localStorage.setItem("token", data.token);
   updateAuthUI();
   fetchTodos();
 }
 
 async function login() {
-  const email = emailInput.value.trim();
-  const password = passwordInput.value.trim();
-  if (!email || !password) return alert("Enter credentials");
-
   const res = await fetch("/api/auth/login", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password })
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({ email: emailInput.value, password: passwordInput.value })
   });
-
   const data = await res.json();
-  if (!res.ok) return alert(data.message);
-
   localStorage.setItem("token", data.token);
   updateAuthUI();
   fetchTodos();
 }
 
-/* ===== TODOS ===== */
+/* 🔓 LOGOUT */
+function logout() {
+  localStorage.removeItem("token");
+  todos = [];
+  updateAuthUI();
+}
+
+/* ❌ DELETE ACCOUNT */
+async function deleteAccount() {
+  if (!confirm("Are you sure you want to delete your account?")) return;
+  await fetch("/api/auth/delete", {
+    method: "DELETE",
+    headers: { Authorization: `Bearer ${getToken()}` }
+  });
+  logout();
+}
+
+/* TODOS */
 async function fetchTodos() {
   loading.classList.remove("hidden");
   const res = await fetch("/api/todos", {
@@ -101,70 +97,9 @@ async function fetchTodos() {
 
 function renderTodos() {
   todoList.innerHTML = "";
-
   const filtered = todos.filter(t =>
     currentFilter === "all" ||
     (currentFilter === "active" && !t.completed) ||
     (currentFilter === "completed" && t.completed)
   );
-
-  emptyMsg.classList.toggle("hidden", filtered.length !== 0);
-
-  filtered.forEach(t => {
-    const li = document.createElement("li");
-    li.className = t.completed ? "completed" : "";
-    li.innerHTML = `
-      <span onclick="toggleTodo('${t._id}')">${t.text}</span>
-      <button onclick="deleteTodo('${t._id}')"><i class="fas fa-trash"></i></button>
-    `;
-    todoList.appendChild(li);
-  });
-}
-
-addBtn.onclick = async () => {
-  if (!todoInput.value.trim()) return;
-  const res = await fetch("/api/todos", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${getToken()}`
-    },
-    body: JSON.stringify({
-      text: todoInput.value,
-      priority: prioritySelect.value,
-      dueDate: dueDateInput.value || null
-    })
-  });
-  todos.unshift(await res.json());
-  todoInput.value = "";
-  dueDateInput.value = "";
-  renderTodos();
-};
-
-async function toggleTodo(id) {
-  const res = await fetch(`/api/todos/${id}`, {
-    method: "PUT",
-    headers: { Authorization: `Bearer ${getToken()}` }
-  });
-  const updated = await res.json();
-  todos = todos.map(t => t._id === id ? updated : t);
-  renderTodos();
-}
-
-async function deleteTodo(id) {
-  await fetch(`/api/todos/${id}`, {
-    method: "DELETE",
-    headers: { Authorization: `Bearer ${getToken()}` }
-  });
-  todos = todos.filter(t => t._id !== id);
-  renderTodos();
-}
-
-filterBtns.forEach(btn => {
-  btn.onclick = () => {
-    filterBtns.forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-    currentFilter = btn.dataset.filter;
-    renderTodos();
-  };
-});
+  emptyMsg.classList.toggle("hidden", filtered.le
