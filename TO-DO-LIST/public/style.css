@@ -3,7 +3,7 @@
   font-family: "Segoe UI", sans-serif;
 }
 
-/* ===== BODY ===== */
+/* BODY */
 body {
   margin: 0;
   min-height: 100vh;
@@ -11,72 +11,112 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: background 0.4s, color 0.4s;
+  transition: 0.3s;
 }
 
-/* ===== DARK BUTTON ===== */
+/* MENU BUTTON */
+.menu-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  border: none;
+  background: #111827;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+/* DARK BUTTON */
 .dark-toggle {
   position: fixed;
   top: 20px;
   right: 20px;
-  width: 54px;
-  height: 54px;
-  font-size: 22px;
-  border-radius: 16px;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  border: none;
   background: #020617;
   color: white;
-  border: none;
+  font-size: 20px;
   cursor: pointer;
-  z-index: 9999;
 }
 
-/* ===== CARD (BIG & PREMIUM) ===== */
+/* LEFT MENU */
+.menu {
+  position: fixed;
+  top: 80px;
+  left: 20px;
+  width: 220px;
+  background: #1e3a8a;
+  border-radius: 14px;
+  display: none;
+  box-shadow: 0 25px 50px rgba(0,0,0,.3);
+}
+
+.menu button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  background: none;
+  color: white;
+  text-align: left;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.menu button:hover {
+  background: #3b82f6;
+}
+
+.menu .danger {
+  color: #fecaca;
+}
+
+/* CARD – WIDER */
 .card {
   width: 95%;
-  max-width: 420px;
-  min-height: 520px;
+  max-width: 650px;
+  min-height: 540px;
   background: white;
-  border-radius: 28px;
-  padding: 32px 28px;
+  border-radius: 24px;
+  padding: 30px;
   box-shadow: 0 30px 60px rgba(0,0,0,.25);
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
 }
 
-/* ===== HEADING ===== */
-.card h2 {
-  font-size: 28px;
-  font-weight: 700;
+/* HEAD */
+h2 {
   text-align: center;
+  font-size: 28px;
 }
 
-/* ===== INPUT AREA ===== */
+/* INPUT */
 .input-area {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr auto;
+  gap: 12px;
 }
 
 input, select {
   padding: 14px;
-  font-size: 15px;
-  border-radius: 14px;
+  border-radius: 12px;
   border: 1px solid #cbd5e1;
 }
 
-/* ===== ADD BUTTON ===== */
+/* ADD */
 .add-btn {
-  padding: 16px;
-  font-size: 16px;
-  border-radius: 16px;
-  background: linear-gradient(135deg, #020617, #1f2937);
+  padding: 14px 18px;
+  border-radius: 14px;
+  background: #111827;
   color: white;
   border: none;
   cursor: pointer;
 }
 
-/* ===== FILTERS ===== */
+/* FILTERS */
 .filters {
   display: flex;
   gap: 10px;
@@ -85,10 +125,10 @@ input, select {
 .filter-btn {
   flex: 1;
   padding: 10px;
-  border-radius: 12px;
+  border-radius: 10px;
   border: none;
+  background: #e5e7eb;
   cursor: pointer;
-  background: #f1f5f9;
 }
 
 .filter-btn.active {
@@ -96,20 +136,21 @@ input, select {
   color: white;
 }
 
-/* ===== TASK LIST ===== */
+/* LIST */
 ul {
   list-style: none;
   padding: 0;
+  margin-top: 16px;
 }
 
 li {
   background: #f8fafc;
   padding: 14px;
   border-radius: 14px;
-  margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 10px;
 }
 
 li.completed {
@@ -117,68 +158,51 @@ li.completed {
   color: gray;
 }
 
-/* ===== AUTH ===== */
+/* AUTH */
 .auth-card {
+  width: 340px;
   background: white;
   padding: 28px;
-  width: 340px;
   border-radius: 20px;
   box-shadow: 0 30px 60px rgba(0,0,0,.25);
   text-align: center;
 }
 
-.auth-card input {
-  width: 100%;
-  margin: 10px 0;
-}
-
 .auth-buttons {
   display: flex;
-  gap: 12px;
+  gap: 10px;
 }
 
-.btn-primary {
+.btn-primary, .btn-secondary {
   flex: 1;
   padding: 12px;
   border-radius: 10px;
-  background: #2563eb;
-  color: white;
   border: none;
+  color: white;
 }
 
-.btn-secondary {
-  flex: 1;
-  padding: 12px;
-  border-radius: 10px;
-  background: #6b7280;
-  color: white;
-  border: none;
-}
+.btn-primary { background: #2563eb; }
+.btn-secondary { background: #6b7280; }
 
-/* ===== DARK MODE ===== */
+/* DARK MODE */
 body.dark {
   background: linear-gradient(135deg, #020617, #0f172a);
   color: white;
 }
 
-body.dark .card {
+body.dark .card,
+body.dark .auth-card,
+body.dark .menu {
   background: #020617;
+  color: white;
 }
 
 body.dark input,
-body.dark select {
+body.dark select,
+body.dark li {
   background: #020617;
   color: white;
   border: 1px solid #334155;
-}
-
-body.dark li {
-  background: #020617;
-  border: 1px solid #1f2937;
-}
-
-body.dark .add-btn {
-  background: linear-gradient(135deg, #2563eb, #22c55e);
 }
 
 .hidden {
