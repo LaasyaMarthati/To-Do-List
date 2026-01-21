@@ -11,11 +11,19 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: black;
+}
+
+/* ===== APP WRAPPER ===== */
+.app-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* ===== TOP BUTTONS ===== */
-.menu-btn, .dark-toggle {
+.menu-btn,
+.dark-toggle {
   position: fixed;
   top: 20px;
   background: #111827;
@@ -65,57 +73,66 @@ body {
   background: #3b82f6;
 }
 
-/* ===== CARD ===== */
-.card {
-  width: 95%;
-  max-width: 560px;
+.hidden {
+  display: none;
+}
+
+/* ===== BIG CENTER CARD ===== */
+.card.big-card {
+  width: 85vw;
+  max-width: 1000px;
   background: white;
-  border-radius: 18px;
-  padding: 22px;
-  box-shadow: 0 25px 50px rgba(0,0,0,.25);
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 30px 60px rgba(0,0,0,.25);
 }
 
 h2 {
   text-align: center;
-}
-
-.hidden {
-  display: none;
+  margin-bottom: 20px;
 }
 
 /* ===== INPUT AREA ===== */
 .input-area {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
-input, select {
-  padding: 10px;
+.row {
+  display: flex;
+  gap: 12px;
+}
+
+input,
+select {
+  padding: 12px;
   border-radius: 10px;
   border: 1px solid #cbd5e1;
+  flex: 1;
 }
 
 .add-btn {
   background: #111827;
   color: white;
-  padding: 12px;
+  padding: 12px 18px;
   border: none;
   border-radius: 12px;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 /* ===== FILTERS ===== */
 .filters {
   display: flex;
-  gap: 6px;
-  margin-top: 15px;
+  gap: 10px;
+  margin-top: 18px;
 }
 
 .filter-btn {
   flex: 1;
-  padding: 8px;
-  border-radius: 8px;
+  padding: 10px;
+  border-radius: 10px;
   border: none;
   cursor: pointer;
 }
@@ -134,10 +151,10 @@ ul {
 
 li {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 8px;
   background: #f8fafc;
-  padding: 12px;
+  padding: 14px;
   border-radius: 12px;
   margin-bottom: 10px;
 }
@@ -169,7 +186,7 @@ li.completed {
 /* ===== AUTH ===== */
 .auth-card {
   background: white;
-  padding: 25px;
+  padding: 28px;
   width: 320px;
   border-radius: 15px;
   box-shadow: 0 20px 40px rgba(0,0,0,.25);
