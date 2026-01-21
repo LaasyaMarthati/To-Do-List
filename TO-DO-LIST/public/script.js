@@ -1,170 +1,367 @@
-const todoInput = document.getElementById("todo-input");
-const addBtn = document.getElementById("add-btn");
-const todoList = document.getElementById("todo-list");
-const filterBtns = document.querySelectorAll(".filter-btn");
-const prioritySelect = document.getElementById("priority-select");
-const dueDateInput = document.getElementById("due-date");
-
+//public/script.js
+const todoInput = document.getElementById('todo-input');
+const addBtn = document.getElementById('add-btn');
+const todoList = document.getElementById('todo-list');
+const filterBtns = document.querySelectorAll('.filter-btn');
+const prioritySelect = document.getElementById('priority-select');
+const dueDateInput = document.getElementById('due-date');
 const emailInput = document.getElementById("email");
 const passwordInput = document.getElementById("password");
 const authSection = document.getElementById("auth-section");
-const appSection = document.getElementById("app-section");
+const profileDropdown = document.getElementById("profile-dropdown");
+const profileEmail = document.getElementById("profile-email");
 
-const loading = document.getElementById("loading");
-const emptyMsg = document.getElementById("empty-msg");
 
-let todos = [];
-let currentFilter = "all";
 
-/* ===== TOKEN ===== */
 function getToken() {
   return localStorage.getItem("token");
 }
 
-/* ===== DARK MODE ===== */
-function toggleDark() {
-  document.body.classList.toggle("dark");
-  const isDark = document.body.classList.contains("dark");
-  document.getElementById("darkBtn").textContent = isDark ? "☀️" : "🌙";
-  localStorage.setItem("darkMode", isDark);
+function toggleProfileMenu() {
+  profileDropdown.classList.toggle("hidden");
 }
 
-window.addEventListener("DOMContentLoaded", () => {
-  if (localStorage.getItem("darkMode") === "true") {
-    document.body.classList.add("dark");
-    document.getElementById("darkBtn").textContent = "☀️";
-  }
+
+let todos = []; // Local copy of tasks
+let currentFilter = 'all';
+
+// 1. Fetch Todos from Backend on load
+// document.addEventListener('DOMContentLoaded', fetchTodos);
+document.addEventListener('DOMContentLoaded', () => {
   updateAuthUI();
-  if (getToken()) fetchTodos();
+  if (getToken()) {
+    fetchTodos();
+  }
 });
 
-/* ===== AUTH UI ===== */
-function updateAuthUI() {
-  if (getToken()) {
-    authSection.style.display = "none";
-    appSection.style.display = "block";
-  } else {
-    authSection.style.display = "block";
-    appSection.style.display = "none";
-  }
+
+
+async function fetchTodos() {
+    const loading = document.getElementById('loading');
+    loading.style.display = "block";
+
+    try {
+        // const res = await fetch('/api/todos');
+        const res = await fetch('/api/todos', {
+            headers: {
+                "Authorization": `Bearer ${getToken()}`
+            }
+        });
+        todos = await res.json();
+        renderTodos();
+    } catch (err) {
+        console.error("Failed to load todos!");
+        console.error('Error fetching todos:', err);
+    } finally {
+        loading.style.display = "none";
+    }
 }
 
-/* ===== AUTH ===== */
+
+// 2. Render Todos to the Screen
+function renderTodos() {
+    todoList.innerHTML = ''; // Clear current list
+    const emptyMsg = document.getElementById('empty-msg');
+    todos.sort((a, b) => b.pinned - a.pinned);
+
+    // Filter logic
+    const filteredTodos = todos.filter(todo => {
+        if (currentFilter === 'active') return !todo.completed;
+        if (currentFilter === 'completed') return todo.completed;
+        return true; // 'all'
+    });
+
+    filteredTodos.forEach(todo => {
+        // Create List Item
+        const li = document.createElement('li');
+        if (todo.completed) li.classList.add('completed');
+
+        li.innerHTML = `
+        <div class="todo-left">
+            <span class="priority-dot ${todo.priority}"></span>
+
+            <div class="todo-text-wrapper">
+                <span id="text-${todo._id}" onclick="toggleTodo('${todo._id}')">
+                ${todo.text}
+                </span>
+                ${todo.dueDate ? 
+                `<small class="due-text">Due: ${new Date(todo.dueDate).toLocaleString()}</small>` 
+                : ''}
+            </div>
+        </div>
+
+        <div class="todo-actions">
+            <button class="pin-btn" onclick="pinTodo('${todo._id}')">
+                ${todo.pinned ? '📌' : '📍'}
+            </button>
+            <button class="edit-btn" onclick="editTodo('${todo._id}')">
+                <i class="fas fa-pen"></i>
+            </button>
+            <button class="delete-btn" onclick="deleteTodo('${todo._id}')">
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
+        `;
+
+        todoList.appendChild(li);
+    });
+
+    if (filteredTodos.length === 0) {
+        emptyMsg.style.display = "block";
+    } else {
+        emptyMsg.style.display = "none";
+    }
+
+}
+
+// 3. Add New Task
+addBtn.addEventListener('click', addTodo);
+todoInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') addTodo();
+});
+
+async function addTodo() {
+    const text = todoInput.value.trim();
+    const priority = prioritySelect.value;
+    const dueDate = dueDateInput.value || null;
+    if (!text) return;
+
+    try {
+        const res = await fetch('/api/todos', {
+            method: 'POST',
+            headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${getToken()}`
+            },
+            body: JSON.stringify({ text, priority, dueDate })
+        });
+
+        dueDateInput.value = '';
+        const newTodo = await res.json();
+
+        todos.unshift(newTodo); // Add to local list immediately
+        todoInput.value = '';
+        renderTodos();
+    } catch (err) {
+        console.error("Could not add task.");
+    }
+}
+
+// 4. Toggle Complete Status
+async function toggleTodo(id) {
+    try {
+        const res = await fetch(`/api/todos/${id}`, { method: 'PUT',headers: { "Authorization": `Bearer ${getToken()}` } });
+        const updatedTodo = await res.json();
+
+        // Update local state
+        todos = todos.map(t => t._id === id ? updatedTodo : t);
+        renderTodos();
+    } catch (err) {
+        console.error("Operation failed.");
+    }
+}
+
+// 5. Delete Task
+async function deleteTodo(id) {
+    if (!confirm('Are you sure?')) return;
+
+    try {
+        await fetch(`/api/todos/${id}`, { method: 'DELETE', headers: { "Authorization": `Bearer ${getToken()}` } });
+
+        // Remove from local state
+        todos = todos.filter(t => t._id !== id);
+        renderTodos();
+    } catch (err) {
+        alert("Could not delete task!");
+    }
+}
+
+// 6. Filter Buttons Logic
+filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        // Remove active class from all buttons
+        filterBtns.forEach(b => b.classList.remove('active'));
+        // Add active class to clicked button
+        btn.classList.add('active');
+
+        currentFilter = btn.getAttribute('data-filter');
+        renderTodos();
+    });
+});
+
+function editTodo(id) {
+    const span = document.getElementById(`text-${id}`);
+    const oldText = span.innerText;
+
+    // Create styled input
+    const input = document.createElement('input');
+    input.value = oldText;
+    input.className = "edit-input";
+
+    // Replace span with input
+    span.replaceWith(input);
+    input.focus();
+
+    async function saveEdit() {
+        const newText = input.value.trim();
+        if (!newText) {
+            renderTodos(); // revert if empty
+            return;
+        }
+
+        try {
+            const res = await fetch(`/api/todos/${id}/edit`, {
+                method: 'PUT',
+                headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${getToken()}`
+                },
+                body: JSON.stringify({ text: newText })
+            });
+
+            const updatedTodo = await res.json();
+
+            todos = todos.map(t =>
+                t._id === id ? updatedTodo : t
+            );
+
+            renderTodos();
+        } catch (err) {
+            console.error("Could not edit task");
+            renderTodos();
+        }
+    }
+
+    // Save when user presses Enter
+    input.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') saveEdit();
+    });
+
+    // Save when user clicks outside
+    input.addEventListener('blur', saveEdit);
+}
+
+async function pinTodo(id) {
+    try {
+        const res = await fetch(`/api/todos/${id}/pin`, { method: 'PUT', headers: { "Authorization": `Bearer ${getToken()}` } });
+        const updatedTodo = await res.json();
+
+        todos = todos.map(t =>
+            t._id === id ? updatedTodo : t
+        );
+
+        renderTodos();
+    } catch (err) {
+        console.error("Could not pin task");
+    }
+}
+
+
 async function signup() {
   const email = emailInput.value.trim();
   const password = passwordInput.value.trim();
-  if (!email || !password) return alert("Enter credentials");
 
-  const res = await fetch("/api/auth/signup", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password })
-  });
+  if (!email || !password) {
+    alert("Please enter email and password");
+    return;
+  }
 
-  const data = await res.json();
-  if (!res.ok) return alert(data.message);
+  try {
+    const res = await fetch("/api/auth/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password })
+    });
 
-  localStorage.setItem("token", data.token);
-  updateAuthUI();
-  fetchTodos();
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.message); // 🔥 IMPORTANT LINE
+      return;
+    }
+
+    localStorage.setItem("token", data.token);
+    updateAuthUI();
+    fetchTodos();
+
+  } catch (err) {
+    alert("Signup failed. Try again.");
+  }
 }
+
 
 async function login() {
   const email = emailInput.value.trim();
   const password = passwordInput.value.trim();
-  if (!email || !password) return alert("Enter credentials");
 
-  const res = await fetch("/api/auth/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password })
-  });
+  if (!email || !password) {
+    alert("Please enter email and password");
+    return;
+  }
 
-  const data = await res.json();
-  if (!res.ok) return alert(data.message);
+  try {
+    const res = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password })
+    });
 
-  localStorage.setItem("token", data.token);
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.message); // 🔥 IMPORTANT LINE
+      return;
+    }
+
+    localStorage.setItem("token", data.token);
+    updateAuthUI();
+    fetchTodos();
+
+  } catch (err) {
+    alert("Login failed. Try again.");
+  }
+}
+
+
+function logout() {
+  localStorage.removeItem("token");
+  todos = [];
+  renderTodos();
+  profileDropdown.classList.add("hidden"); // ADD THIS
   updateAuthUI();
-  fetchTodos();
 }
 
-/* ===== TODOS ===== */
-async function fetchTodos() {
-  loading.classList.remove("hidden");
-  const res = await fetch("/api/todos", {
-    headers: { Authorization: `Bearer ${getToken()}` }
-  });
-  todos = await res.json();
-  renderTodos();
-  loading.classList.add("hidden");
-}
 
-function renderTodos() {
-  todoList.innerHTML = "";
+async function deleteAccount() {
+  if (!confirm("This will delete your account and all your todos. Continue?")) return;
 
-  const filtered = todos.filter(t =>
-    currentFilter === "all" ||
-    (currentFilter === "active" && !t.completed) ||
-    (currentFilter === "completed" && t.completed)
-  );
-
-  emptyMsg.classList.toggle("hidden", filtered.length !== 0);
-
-  filtered.forEach(t => {
-    const li = document.createElement("li");
-    li.className = t.completed ? "completed" : "";
-    li.innerHTML = `
-      <span onclick="toggleTodo('${t._id}')">${t.text}</span>
-      <button onclick="deleteTodo('${t._id}')"><i class="fas fa-trash"></i></button>
-    `;
-    todoList.appendChild(li);
-  });
-}
-
-addBtn.onclick = async () => {
-  if (!todoInput.value.trim()) return;
-  const res = await fetch("/api/todos", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${getToken()}`
-    },
-    body: JSON.stringify({
-      text: todoInput.value,
-      priority: prioritySelect.value,
-      dueDate: dueDateInput.value || null
-    })
-  });
-  todos.unshift(await res.json());
-  todoInput.value = "";
-  dueDateInput.value = "";
-  renderTodos();
-};
-
-async function toggleTodo(id) {
-  const res = await fetch(`/api/todos/${id}`, {
-    method: "PUT",
-    headers: { Authorization: `Bearer ${getToken()}` }
-  });
-  const updated = await res.json();
-  todos = todos.map(t => t._id === id ? updated : t);
-  renderTodos();
-}
-
-async function deleteTodo(id) {
-  await fetch(`/api/todos/${id}`, {
+  await fetch("/api/auth/delete", {
     method: "DELETE",
-    headers: { Authorization: `Bearer ${getToken()}` }
+    headers: {
+      "Authorization": `Bearer ${getToken()}`
+    }
   });
-  todos = todos.filter(t => t._id !== id);
-  renderTodos();
+
+  logout();
 }
 
-filterBtns.forEach(btn => {
-  btn.onclick = () => {
-    filterBtns.forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-    currentFilter = btn.dataset.filter;
-    renderTodos();
-  };
-});
+
+function updateAuthUI() {
+  const token = getToken();
+  const authSection = document.getElementById("auth-section");
+  const appSection = document.getElementById("app-section");
+
+  if (token) {
+    authSection.style.display = "none";   // hide login
+    appSection.style.display = "block";   // show app
+    profileDropdown.classList.add("hidden");
+
+    // show something sensible in profile
+    profileEmail.innerText = emailInput.value || "Logged in user";
+    // profileEmail.innerText = "Logged in user";
+  } else {
+    authSection.style.display = "block";  // show login
+    appSection.style.display = "none";    // hide app
+  }
+}
+
