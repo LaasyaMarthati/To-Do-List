@@ -3,7 +3,7 @@
   font-family: "Segoe UI", sans-serif;
 }
 
-/* ===== BODY ===== */
+/* BODY */
 body {
   margin: 0;
   min-height: 100vh;
@@ -11,122 +11,115 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: 0.3s;
 }
 
-/* ===== APP WRAPPER ===== */
-.app-wrapper {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* ===== TOP BUTTONS ===== */
-.menu-btn,
-.dark-toggle {
+/* MENU BUTTON */
+.menu-btn {
   position: fixed;
   top: 20px;
-  background: #111827;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-}
-
-.menu-btn {
   left: 20px;
   width: 48px;
   height: 48px;
+  border-radius: 12px;
+  border: none;
+  background: #111827;
+  color: white;
   font-size: 22px;
+  cursor: pointer;
+  z-index: 1000;
 }
 
+/* DARK BUTTON */
 .dark-toggle {
+  position: fixed;
+  top: 20px;
   right: 20px;
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  border: none;
+  background: #020617;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
 }
 
-/* ===== MENU ===== */
+/* LEFT MENU */
 .menu {
   position: fixed;
   top: 80px;
   left: 20px;
   width: 220px;
   background: #1e3a8a;
-  border-radius: 12px;
-  padding: 12px;
-  color: white;
-  box-shadow: 0 20px 40px rgba(0,0,0,.3);
+  border-radius: 14px;
+  display: none;
+  box-shadow: 0 25px 50px rgba(0,0,0,.3);
 }
 
 .menu button {
   width: 100%;
-  padding: 10px;
-  background: none;
+  padding: 14px;
   border: none;
+  background: none;
   color: white;
   text-align: left;
   cursor: pointer;
+  font-size: 15px;
 }
 
 .menu button:hover {
   background: #3b82f6;
 }
 
-.hidden {
-  display: none;
+.menu .danger {
+  color: #fecaca;
 }
 
-/* ===== BIG CENTER CARD ===== */
-.card.big-card {
-  width: 85vw;
-  max-width: 1000px;
+/* CARD – WIDER */
+.card {
+  width: 95%;
+  max-width: 650px;
+  min-height: 540px;
   background: white;
-  border-radius: 20px;
-  padding: 28px;
+  border-radius: 24px;
+  padding: 30px;
   box-shadow: 0 30px 60px rgba(0,0,0,.25);
 }
 
+/* HEAD */
 h2 {
   text-align: center;
-  margin-bottom: 20px;
+  font-size: 28px;
 }
 
-/* ===== INPUT AREA ===== */
+/* INPUT */
 .input-area {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr auto;
   gap: 12px;
 }
 
-.row {
-  display: flex;
-  gap: 12px;
-}
-
-input,
-select {
-  padding: 12px;
-  border-radius: 10px;
+input, select {
+  padding: 14px;
+  border-radius: 12px;
   border: 1px solid #cbd5e1;
-  flex: 1;
 }
 
+/* ADD */
 .add-btn {
+  padding: 14px 18px;
+  border-radius: 14px;
   background: #111827;
   color: white;
-  padding: 12px 18px;
   border: none;
-  border-radius: 12px;
   cursor: pointer;
-  white-space: nowrap;
 }
 
-/* ===== FILTERS ===== */
+/* FILTERS */
 .filters {
   display: flex;
   gap: 10px;
-  margin-top: 18px;
 }
 
 .filter-btn {
@@ -134,6 +127,7 @@ select {
   padding: 10px;
   border-radius: 10px;
   border: none;
+  background: #e5e7eb;
   cursor: pointer;
 }
 
@@ -142,20 +136,20 @@ select {
   color: white;
 }
 
-/* ===== LIST ===== */
+/* LIST */
 ul {
   list-style: none;
   padding: 0;
-  margin-top: 20px;
+  margin-top: 16px;
 }
 
 li {
+  background: #f8fafc;
+  padding: 14px;
+  border-radius: 14px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #f8fafc;
-  padding: 14px;
-  border-radius: 12px;
   margin-bottom: 10px;
 }
 
@@ -164,41 +158,14 @@ li.completed {
   color: gray;
 }
 
-/* ===== PRIORITY DOT ===== */
-.priority-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-}
-
-.priority-dot.low { background: #22c55e; }
-.priority-dot.medium { background: #f59e0b; }
-.priority-dot.high { background: #ef4444; }
-
-/* ===== ACTION BUTTONS ===== */
-.todo-actions button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-/* ===== AUTH ===== */
+/* AUTH */
 .auth-card {
+  width: 340px;
   background: white;
   padding: 28px;
-  width: 320px;
-  border-radius: 15px;
-  box-shadow: 0 20px 40px rgba(0,0,0,.25);
+  border-radius: 20px;
+  box-shadow: 0 30px 60px rgba(0,0,0,.25);
   text-align: center;
-}
-
-.auth-card input {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 8px;
-  border: 1px solid #ccc;
 }
 
 .auth-buttons {
@@ -206,20 +173,38 @@ li.completed {
   gap: 10px;
 }
 
-.btn-primary {
+.btn-primary, .btn-secondary {
   flex: 1;
-  padding: 10px;
-  background: #2563eb;
-  color: white;
+  padding: 12px;
+  border-radius: 10px;
   border: none;
-  border-radius: 8px;
+  color: white;
 }
 
-.btn-secondary {
-  flex: 1;
-  padding: 10px;
-  background: #6b7280;
+.btn-primary { background: #2563eb; }
+.btn-secondary { background: #6b7280; }
+
+/* DARK MODE */
+body.dark {
+  background: linear-gradient(135deg, #020617, #0f172a);
   color: white;
-  border: none;
-  border-radius: 8px;
+}
+
+body.dark .card,
+body.dark .auth-card,
+body.dark .menu {
+  background: #020617;
+  color: white;
+}
+
+body.dark input,
+body.dark select,
+body.dark li {
+  background: #020617;
+  color: white;
+  border: 1px solid #334155;
+}
+
+.hidden {
+  display: none;
 }
