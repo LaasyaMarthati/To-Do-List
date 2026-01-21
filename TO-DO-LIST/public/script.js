@@ -16,19 +16,12 @@ const emptyMsg = document.getElementById("empty-msg");
 let todos = [];
 let currentFilter = "all";
 
-/* TOKEN */
-const getToken = () => localStorage.getItem("token");
-
-/* MENU */
-function toggleMenu() {
-  const menu = document.getElementById("menu");
-  menu.style.display = menu.style.display === "block" ? "none" : "block";
-}
-function closeMenu() {
-  document.getElementById("menu").style.display = "none";
+/* ===== TOKEN ===== */
+function getToken() {
+  return localStorage.getItem("token");
 }
 
-/* DARK */
+/* ===== DARK MODE ===== */
 function toggleDark() {
   document.body.classList.toggle("dark");
   const isDark = document.body.classList.contains("dark");
@@ -36,7 +29,16 @@ function toggleDark() {
   localStorage.setItem("darkMode", isDark);
 }
 
-/* AUTH UI */
+window.addEventListener("DOMContentLoaded", () => {
+  if (localStorage.getItem("darkMode") === "true") {
+    document.body.classList.add("dark");
+    document.getElementById("darkBtn").textContent = "☀️";
+  }
+  updateAuthUI();
+  if (getToken()) fetchTodos();
+});
+
+/* ===== AUTH UI ===== */
 function updateAuthUI() {
   if (getToken()) {
     authSection.style.display = "none";
@@ -47,50 +49,46 @@ function updateAuthUI() {
   }
 }
 
-/* AUTH */
+/* ===== AUTH ===== */
 async function signup() {
+  const email = emailInput.value.trim();
+  const password = passwordInput.value.trim();
+  if (!email || !password) return alert("Enter credentials");
+
   const res = await fetch("/api/auth/signup", {
     method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({ email: email.value, password: password.value })
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password })
   });
+
   const data = await res.json();
   if (!res.ok) return alert(data.message);
+
   localStorage.setItem("token", data.token);
   updateAuthUI();
   fetchTodos();
 }
 
 async function login() {
+  const email = emailInput.value.trim();
+  const password = passwordInput.value.trim();
+  if (!email || !password) return alert("Enter credentials");
+
   const res = await fetch("/api/auth/login", {
     method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({ email: email.value, password: password.value })
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password })
   });
+
   const data = await res.json();
   if (!res.ok) return alert(data.message);
+
   localStorage.setItem("token", data.token);
   updateAuthUI();
   fetchTodos();
 }
 
-function logout() {
-  localStorage.removeItem("token");
-  todos = [];
-  updateAuthUI();
-  closeMenu();
-}
-
-async function deleteAccount() {
-  if (!confirm("This will permanently delete your account. Continue?")) return;
-  await fetch("/api/auth/delete", {
-    method: "DELETE",
-    headers: { Authorization: `Bearer ${getToken()}` }
-  });
-  logout();
-}
-
-/* TODOS */
+/* ===== TODOS ===== */
 async function fetchTodos() {
   loading.classList.remove("hidden");
   const res = await fetch("/api/todos", {
@@ -103,6 +101,7 @@ async function fetchTodos() {
 
 function renderTodos() {
   todoList.innerHTML = "";
+
   const filtered = todos.filter(t =>
     currentFilter === "all" ||
     (currentFilter === "active" && !t.completed) ||
@@ -169,13 +168,3 @@ filterBtns.forEach(btn => {
     renderTodos();
   };
 });
-
-/* INIT */
-window.onload = () => {
-  if (localStorage.getItem("darkMode") === "true") {
-    document.body.classList.add("dark");
-    document.getElementById("darkBtn").textContent = "☀️";
-  }
-  updateAuthUI();
-  if (getToken()) fetchTodos();
-};
