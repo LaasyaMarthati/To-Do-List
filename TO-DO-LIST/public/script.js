@@ -10,8 +10,6 @@ const authSection = document.getElementById("auth-section");
 const profileDropdown = document.getElementById("profile-dropdown");
 const profileEmail = document.getElementById("profile-email");
 
-
-
 function getToken() {
   return localStorage.getItem("token");
 }
@@ -20,27 +18,28 @@ function toggleProfileMenu() {
   profileDropdown.classList.toggle("hidden");
 }
 
-
 let todos = []; // Local copy of tasks
 let currentFilter = 'all';
 
 // 1. Fetch Todos from Backend on load
-// document.addEventListener('DOMContentLoaded', fetchTodos);
 document.addEventListener('DOMContentLoaded', () => {
   updateAuthUI();
   if (getToken()) {
     fetchTodos();
   }
+
+  // Load saved dark mode preference
+  if(localStorage.getItem('darkMode') === 'true') {
+    document.body.classList.add('dark');
+    document.querySelector(".dark-toggle").innerText = "☀️";
+  }
 });
-
-
 
 async function fetchTodos() {
     const loading = document.getElementById('loading');
     loading.style.display = "block";
 
     try {
-        // const res = await fetch('/api/todos');
         const res = await fetch('/api/todos', {
             headers: {
                 "Authorization": `Bearer ${getToken()}`
@@ -55,7 +54,6 @@ async function fetchTodos() {
         loading.style.display = "none";
     }
 }
-
 
 // 2. Render Todos to the Screen
 function renderTodos() {
@@ -255,7 +253,6 @@ async function pinTodo(id) {
     }
 }
 
-
 async function signup() {
   const email = emailInput.value.trim();
   const password = passwordInput.value.trim();
@@ -287,7 +284,6 @@ async function signup() {
     alert("Signup failed. Try again.");
   }
 }
-
 
 async function login() {
   const email = emailInput.value.trim();
@@ -321,7 +317,6 @@ async function login() {
   }
 }
 
-
 function logout() {
   localStorage.removeItem("token");
   todos = [];
@@ -329,7 +324,6 @@ function logout() {
   profileDropdown.classList.add("hidden"); // ADD THIS
   updateAuthUI();
 }
-
 
 async function deleteAccount() {
   if (!confirm("This will delete your account and all your todos. Continue?")) return;
@@ -344,7 +338,6 @@ async function deleteAccount() {
   logout();
 }
 
-
 function updateAuthUI() {
   const token = getToken();
   const authSection = document.getElementById("auth-section");
@@ -357,10 +350,23 @@ function updateAuthUI() {
 
     // show something sensible in profile
     profileEmail.innerText = emailInput.value || "Logged in user";
-    // profileEmail.innerText = "Logged in user";
   } else {
     authSection.style.display = "block";  // show login
     appSection.style.display = "none";    // hide app
   }
 }
 
+// ===== DARK MODE FUNCTION =====
+function toggleDark() {
+  document.body.classList.toggle("dark");
+
+  // Change button icon
+  const darkBtn = document.querySelector(".dark-toggle");
+  if (document.body.classList.contains("dark")) {
+    darkBtn.innerText = "☀️"; // sun
+    localStorage.setItem('darkMode', 'true');
+  } else {
+    darkBtn.innerText = "🌙"; // moon
+    localStorage.setItem('darkMode', 'false');
+  }
+}
