@@ -69,7 +69,7 @@ body {
 /* ===== CARD ===== */
 .card {
   width: 90%;
-  max-width: 900px;
+  min-width: 900px;
   background: white;
   border-radius: 22px;
   padding: 30px;   
