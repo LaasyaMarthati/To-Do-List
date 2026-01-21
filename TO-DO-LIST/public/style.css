@@ -217,3 +217,51 @@ li.completed {
   border: none;
   border-radius: 8px;
 }
+/* ===== DARK MODE ===== */
+body.dark {
+  background: #111827;
+  color: #f8fafc;
+}
+
+body.dark .card {
+  background: #1f2937;
+  color: #f8fafc;
+}
+
+body.dark input,
+body.dark select {
+  background: #374151;
+  color: #f8fafc;
+  border: 1px solid #6b7280;
+}
+
+body.dark .auth-card {
+  background: #1f2937;
+  color: #f8fafc;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+
+body.dark .menu {
+  background: #1f2937;
+}
+
+body.dark .menu button:hover {
+  background: #2563eb;
+}
+
+body.dark .add-btn,
+body.dark .btn-primary,
+body.dark .btn-secondary,
+body.dark .filter-btn.active {
+  background: #2563eb;
+  color: white;
+}
+
+body.dark li {
+  background: #374151;
+  color: #f8fafc;
+}
+
+body.dark li.completed {
+  color: #9ca3af;
+}
