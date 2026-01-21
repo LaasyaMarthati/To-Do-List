@@ -65,13 +65,13 @@ body {
   background: #3b82f6;
 }
 
-/* ===== CARD ===== */
+/* ===== MAIN CARD (WIDE & RECTANGULAR) ===== */
 .card {
-  width: 95%;
-  max-width: 560px;
+  width: 90%;
+  max-width: 900px;     /* Increased horizontal width */
   background: white;
   border-radius: 18px;
-  padding: 22px;
+  padding: 24px 28px;
   box-shadow: 0 25px 50px rgba(0,0,0,.25);
 }
 
@@ -87,11 +87,13 @@ h2 {
 .input-area {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
+  width: 100%;
 }
 
 input, select {
-  padding: 10px;
+  width: 100%;
+  padding: 12px;
   border-radius: 10px;
   border: 1px solid #cbd5e1;
 }
@@ -108,14 +110,15 @@ input, select {
 /* ===== FILTERS ===== */
 .filters {
   display: flex;
-  gap: 6px;
-  margin-top: 15px;
+  gap: 10px;
+  margin-top: 18px;
+  width: 100%;
 }
 
 .filter-btn {
   flex: 1;
-  padding: 8px;
-  border-radius: 8px;
+  padding: 10px;
+  border-radius: 10px;
   border: none;
   cursor: pointer;
 }
@@ -125,21 +128,22 @@ input, select {
   color: white;
 }
 
-/* ===== LIST ===== */
+/* ===== TODO LIST ===== */
 ul {
   list-style: none;
   padding: 0;
-  margin-top: 20px;
+  margin-top: 22px;
 }
 
 li {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   background: #f8fafc;
-  padding: 12px;
+  padding: 14px 16px;
   border-radius: 12px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  width: 100%;
 }
 
 li.completed {
@@ -159,6 +163,12 @@ li.completed {
 .priority-dot.high { background: #ef4444; }
 
 /* ===== ACTION BUTTONS ===== */
+.todo-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 10px;
+}
+
 .todo-actions button {
   background: none;
   border: none;
@@ -170,7 +180,7 @@ li.completed {
 .auth-card {
   background: white;
   padding: 25px;
-  width: 320px;
+  width: 360px;
   border-radius: 15px;
   box-shadow: 0 20px 40px rgba(0,0,0,.25);
   text-align: center;
