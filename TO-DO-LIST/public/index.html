@@ -3,49 +3,53 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Smart Tasks</title>
+<title>Smart Todo App</title>
 
 <link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
 
-<!-- 🌙 DARK MODE BUTTON -->
-<button class="dark-toggle" id="darkBtn" onclick="toggleDark()">🌙</button>
-
-<!-- 🔐 AUTH SECTION -->
+<!-- ===== AUTH SECTION ===== -->
 <div id="auth-section" class="auth-card">
   <h3>Login / Signup</h3>
   <input id="email" type="email" placeholder="Email">
   <input id="password" type="password" placeholder="Password">
 
   <div class="auth-buttons">
-    <button class="btn-secondary" onclick="signup()">Signup</button>
-    <button class="btn-primary" onclick="login()">Login</button>
+    <button onclick="signup()" class="btn-secondary">Signup</button>
+    <button onclick="login()" class="btn-primary">Login</button>
   </div>
 </div>
 
-<!-- ✅ APP SECTION -->
+<!-- ===== APP SECTION ===== -->
 <div id="app-section" style="display:none;">
-  <div class="card">
 
+  <!-- TOP BUTTONS -->
+  <button class="menu-btn" onclick="toggleProfileMenu()">☰</button>
+  <button class="dark-toggle" onclick="toggleDark()">🌙</button>
+
+  <!-- PROFILE MENU -->
+  <div id="profile-dropdown" class="menu hidden">
+    <p id="profile-email">User</p>
+    <button onclick="logout()">Logout</button>
+    <button onclick="deleteAccount()">Delete Account</button>
+  </div>
+
+  <!-- MAIN CARD -->
+  <div class="card">
     <h2>Smart Tasks</h2>
 
     <div class="input-area">
       <input id="todo-input" placeholder="Task name">
-
       <select id="priority-select">
         <option value="high">🔥 High</option>
         <option value="medium">⚡ Medium</option>
         <option value="low">🌿 Low</option>
       </select>
-
       <input type="datetime-local" id="due-date">
-
-      <button id="add-btn" class="add-btn">
-        <i class="fas fa-plus"></i> Add Task
-      </button>
+      <button id="add-btn" class="add-btn">➕ Add Task</button>
     </div>
 
     <div class="filters">
@@ -57,8 +61,8 @@
     <p id="loading" class="hidden">Loading...</p>
     <ul id="todo-list"></ul>
     <p id="empty-msg" class="empty hidden">No tasks yet</p>
-
   </div>
+
 </div>
 
 <script src="script.js"></script>
