@@ -72,10 +72,9 @@ body {
   min-width: 900px;
   background: white;
   border-radius: 22px;
-  padding: 30px;   
+  padding: 30px;
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
 }
-
 
 h2 {
   text-align: center;
@@ -138,16 +137,17 @@ ul {
 li {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   background: #f8fafc;
   padding: 12px;
   border-radius: 12px;
   margin-bottom: 10px;
 }
 
+/* ❌ NO STRIKE THROUGH */
 li.completed {
-  text-decoration: line-through;
-  color: gray;
+  text-decoration: none;
+  color: inherit;
 }
 
 /* ===== PRIORITY DOT ===== */
@@ -157,17 +157,9 @@ li.completed {
   border-radius: 50%;
 }
 
-.priority-dot.low {
-  background: #22c55e;
-}
-
-.priority-dot.medium {
-  background: #f59e0b;
-}
-
-.priority-dot.high {
-  background: #ef4444;
-}
+.priority-dot.low { background: #22c55e; }
+.priority-dot.medium { background: #f59e0b; }
+.priority-dot.high { background: #ef4444; }
 
 /* ===== ACTION BUTTONS ===== */
 .todo-actions button {
@@ -217,13 +209,16 @@ li.completed {
   border: none;
   border-radius: 8px;
 }
+
 /* ===== DARK MODE ===== */
 body.dark {
   background: #111827;
   color: #f8fafc;
 }
 
-body.dark .card {
+body.dark .card,
+body.dark .auth-card,
+body.dark .menu {
   background: #1f2937;
   color: #f8fafc;
 }
@@ -235,31 +230,8 @@ body.dark select {
   border: 1px solid #6b7280;
 }
 
-body.dark .auth-card {
-  background: #1f2937;
-  color: #f8fafc;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-}
-
-body.dark .menu {
-  background: #1f2937;
-}
-
-body.dark .menu button:hover {
-  background: #2563eb;
-}
-
-body.dark .add-btn,
-body.dark .btn-primary,
-body.dark .btn-secondary,
-body.dark .filter-btn.active {
-  background: #2563eb;
-  color: white;
-}
-
 body.dark li {
   background: #374151;
-  color: #f8fafc;
 }
 
 body.dark li.completed {
