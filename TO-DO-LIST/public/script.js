@@ -75,11 +75,10 @@ function renderTodos() {
 
         li.innerHTML = `
         <div class="todo-left">
-            <input type="checkbox" class="todo-checkbox" ${todo.completed ? 'checked' : ''} onclick="toggleTodo('${todo._id}')">
             <span class="priority-dot ${todo.priority}"></span>
 
             <div class="todo-text-wrapper">
-                <span id="text-${todo._id}">
+                <span id="text-${todo._id}" onclick="toggleTodo('${todo._id}')">
                 ${todo.text}
                 </span>
                 ${todo.dueDate ? 
