@@ -4,41 +4,27 @@ const todoList = document.getElementById('todo-list');
 const filterBtns = document.querySelectorAll('.filter-btn');
 const prioritySelect = document.getElementById('priority-select');
 const dueDateInput = document.getElementById('due-date');
-const emailInput = document.getElementById("email");
-const passwordInput = document.getElementById("password");
-const authSection = document.getElementById("auth-section");
-const profileDropdown = document.getElementById("profile-dropdown");
-const profileEmail = document.getElementById("profile-email");
-
-function getToken() {
-  return localStorage.getItem("token");
-}
 
 let todos = [];
 let currentFilter = 'all';
 
 document.addEventListener('DOMContentLoaded', () => {
-  updateAuthUI();
-  if (getToken()) fetchTodos();
-
   if (localStorage.getItem('darkMode') === 'true') {
     document.body.classList.add('dark');
-    document.querySelector(".dark-toggle").innerText = "☀️";
   }
+  fetchTodos();
 });
 
 async function fetchTodos() {
   const res = await fetch('/api/todos', {
-    headers: { "Authorization": `Bearer ${getToken()}` }
+    headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
   });
   todos = await res.json();
   renderTodos();
 }
 
-/* ===== RENDER TODOS WITH CHECKBOX ===== */
 function renderTodos() {
   todoList.innerHTML = '';
-  const emptyMsg = document.getElementById('empty-msg');
 
   const filteredTodos = todos.filter(todo => {
     if (currentFilter === 'active') return !todo.completed;
@@ -51,55 +37,63 @@ function renderTodos() {
 
     li.innerHTML = `
       <input type="checkbox"
-        ${todo.completed ? "checked" : ""}
-        onclick="completeViaCheckbox('${todo._id}', ${todo.completed})"
-      />
+        class="todo-checkbox"
+        ${todo.completed ? 'checked' : ''}
+        onclick="completeTask('${todo._id}')">
 
       <span class="priority-dot ${todo.priority}"></span>
 
       <span>${todo.text}</span>
 
       <div class="todo-actions">
-        <button onclick="pinTodo('${todo._id}')">${todo.pinned ? '📌' : '📍'}</button>
-        <button onclick="editTodo('${todo._id}')">✏️</button>
-        <button onclick="deleteTodo('${todo._id}')">🗑</button>
+        <button onclick="editTodo('${todo._id}')">
+          <i class="fas fa-pen"></i>
+        </button>
+        <button onclick="deleteTodo('${todo._id}')">
+          <i class="fas fa-trash"></i>
+        </button>
       </div>
     `;
 
     todoList.appendChild(li);
   });
-
-  emptyMsg.style.display = filteredTodos.length === 0 ? "block" : "none";
 }
 
-/* ===== COMPLETE VIA CHECKBOX ===== */
-async function completeViaCheckbox(id, alreadyCompleted) {
-  if (alreadyCompleted) return;
+/* ✅ COMPLETE TASK WITH MESSAGE */
+async function completeTask(id) {
+  await toggleTodo(id);
+  alert("🎉 Yay! Task completed!");
+  currentFilter = 'completed';
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('[data-filter="completed"]').classList.add('active');
+}
 
-  alert("🎉 Yay! Task completed");
-
+/* BACKEND STATUS TOGGLE (UNCHANGED) */
+async function toggleTodo(id) {
   const res = await fetch(`/api/todos/${id}`, {
     method: 'PUT',
-    headers: { "Authorization": `Bearer ${getToken()}` }
+    headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
   });
-
-  const updatedTodo = await res.json();
-  todos = todos.map(t => t._id === id ? updatedTodo : t);
+  const updated = await res.json();
+  todos = todos.map(t => t._id === id ? updated : t);
   renderTodos();
 }
 
-/* ===== ADD TODO ===== */
+/* ADD TODO */
 addBtn.addEventListener('click', async () => {
-  const text = todoInput.value.trim();
-  if (!text) return;
+  if (!todoInput.value.trim()) return;
 
   const res = await fetch('/api/todos', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${getToken()}`
+      "Authorization": `Bearer ${localStorage.getItem("token")}`
     },
-    body: JSON.stringify({ text })
+    body: JSON.stringify({
+      text: todoInput.value,
+      priority: prioritySelect.value,
+      dueDate: dueDateInput.value || null
+    })
   });
 
   const newTodo = await res.json();
@@ -108,27 +102,22 @@ addBtn.addEventListener('click', async () => {
   renderTodos();
 });
 
-/* ===== FILTERS ===== */
+/* DELETE */
+async function deleteTodo(id) {
+  await fetch(`/api/todos/${id}`, {
+    method: 'DELETE',
+    headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
+  });
+  todos = todos.filter(t => t._id !== id);
+  renderTodos();
+}
+
+/* FILTERS */
 filterBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
+  btn.onclick = () => {
     filterBtns.forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     currentFilter = btn.dataset.filter;
     renderTodos();
-  });
+  };
 });
-
-function updateAuthUI() {
-  if (getToken()) {
-    authSection.style.display = "none";
-    document.getElementById("app-section").style.display = "block";
-  } else {
-    authSection.style.display = "block";
-    document.getElementById("app-section").style.display = "none";
-  }
-}
-
-function toggleDark() {
-  document.body.classList.toggle("dark");
-  localStorage.setItem("darkMode", document.body.classList.contains("dark"));
-}
