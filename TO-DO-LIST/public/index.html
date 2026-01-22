@@ -4,34 +4,43 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Smart Todo App</title>
+
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
+
 <body>
+
 <!-- ===== AUTH SECTION ===== -->
 <div id="auth-section" class="auth-card">
   <h3>Login / Signup</h3>
   <input id="email" type="email" placeholder="Email">
   <input id="password" type="password" placeholder="Password">
+
   <div class="auth-buttons">
     <button onclick="signup()" class="btn-secondary">Signup</button>
     <button onclick="login()" class="btn-primary">Login</button>
   </div>
 </div>
+
 <!-- ===== APP SECTION ===== -->
 <div id="app-section" style="display:none;">
+
   <!-- TOP BUTTONS -->
   <button class="menu-btn" onclick="toggleProfileMenu()">☰</button>
   <button class="dark-toggle" onclick="toggleDark()">🌙</button>
+
   <!-- PROFILE MENU -->
   <div id="profile-dropdown" class="menu hidden">
     <p id="profile-email">User</p>
     <button onclick="logout()">Logout</button>
     <button onclick="deleteAccount()">Delete Account</button>
   </div>
+
   <!-- MAIN CARD -->
   <div class="card">
     <h2>Smart Tasks</h2>
+
     <div class="input-area">
       <input id="todo-input" placeholder="Task name">
       <select id="priority-select">
@@ -42,16 +51,20 @@
       <input type="datetime-local" id="due-date">
       <button id="add-btn" class="add-btn">➕ Add Task</button>
     </div>
+
     <div class="filters">
       <button class="filter-btn active" data-filter="all">All</button>
       <button class="filter-btn" data-filter="active">Active</button>
       <button class="filter-btn" data-filter="completed">Completed</button>
     </div>
+
     <p id="loading" class="hidden">Loading...</p>
     <ul id="todo-list"></ul>
     <p id="empty-msg" class="empty hidden">No tasks yet</p>
   </div>
+
 </div>
+
 <script src="script.js"></script>
 </body>
 </html>
