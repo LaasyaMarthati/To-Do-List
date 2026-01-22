@@ -1,1 +1,267 @@
-* { box-sizing: border-box; font-family: "Segoe UI", sans-serif; } /* ===== BODY ===== */ body { margin: 0; min-height: 100vh; background: linear-gradient(135deg, #2563eb, #22c55e); display: flex; justify-content: center; align-items: center; color: black; } /* ===== TOP BUTTONS ===== */ .menu-btn, .dark-toggle { position: fixed; top: 20px; background: #111827; color: white; border: none; border-radius: 12px; cursor: pointer; } .menu-btn { left: 20px; width: 48px; height: 48px; font-size: 22px; } .dark-toggle { right: 20px; width: 44px; height: 44px; } /* ===== MENU ===== */ .menu { position: fixed; top: 80px; left: 20px; width: 220px; background: #1e3a8a; border-radius: 12px; padding: 12px; color: white; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); } .menu button { width: 100%; padding: 10px; background: none; border: none; color: white; text-align: left; cursor: pointer; } .menu button:hover { background: #3b82f6; } /* ===== CARD ===== */ .card { width: 90%; min-width: 900px; background: white; border-radius: 22px; padding: 30px; box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3); } h2 { text-align: center; } .hidden { display: none; } /* ===== INPUT AREA ===== */ .input-area { display: flex; flex-direction: column; gap: 10px; } input, select { padding: 10px; border-radius: 10px; border: 1px solid #cbd5e1; } .add-btn { background: #111827; color: white; padding: 12px; border: none; border-radius: 12px; cursor: pointer; } /* ===== FILTERS ===== */ .filters { display: flex; gap: 6px; margin-top: 15px; } .filter-btn { flex: 1; padding: 8px; border-radius: 8px; border: none; cursor: pointer; } .filter-btn.active { background: #2563eb; color: white; } /* ===== LIST ===== */ ul { list-style: none; padding: 0; margin-top: 20px; } li { display: flex; align-items: center; gap: 8px; background: #f8fafc; padding: 12px; border-radius: 12px; margin-bottom: 10px; } li.completed { text-decoration: line-through; color: gray; } /* ===== PRIORITY DOT ===== */ .priority-dot { width: 10px; height: 10px; border-radius: 50%; } .priority-dot.low { background: #22c55e; } .priority-dot.medium { background: #f59e0b; } .priority-dot.high { background: #ef4444; } /* ===== ACTION BUTTONS ===== */ .todo-actions button { background: none; border: none; cursor: pointer; font-size: 16px; } /* ===== AUTH ===== */ .auth-card { background: white; padding: 25px; width: 320px; border-radius: 15px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25); text-align: center; } .auth-card input { width: 100%; padding: 10px; margin: 10px 0; border-radius: 8px; border: 1px solid #ccc; } .auth-buttons { display: flex; gap: 10px; } .btn-primary { flex: 1; padding: 10px; background: #2563eb; color: white; border: none; border-radius: 8px; } .btn-secondary { flex: 1; padding: 10px; background: #6b7280; color: white; border: none; border-radius: 8px; } /* ===== DARK MODE ===== */ body.dark { background: #111827; color: #f8fafc; } body.dark .card { background: #1f2937; color: #f8fafc; } body.dark input, body.dark select { background: #374151; color: #f8fafc; border: 1px solid #6b7280; } body.dark .auth-card { background: #1f2937; color: #f8fafc; box-shadow: 0 20px 40px rgba(0,0,0,0.5); } body.dark .menu { background: #1f2937; } body.dark .menu button:hover { background: #2563eb; } body.dark .add-btn, body.dark .btn-primary, body.dark .btn-secondary, body.dark .filter-btn.active { background: #2563eb; color: white; } body.dark li { background: #374151; color: #f8fafc; } body.dark li.completed { color: #9ca3af; }
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* ===== BODY ===== */
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #2563eb, #22c55e);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+}
+
+/* ===== TOP BUTTONS ===== */
+.menu-btn,
+.dark-toggle {
+  position: fixed;
+  top: 20px;
+  background: #111827;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.menu-btn {
+  left: 20px;
+  width: 48px;
+  height: 48px;
+  font-size: 22px;
+}
+
+.dark-toggle {
+  right: 20px;
+  width: 44px;
+  height: 44px;
+}
+
+/* ===== MENU ===== */
+.menu {
+  position: fixed;
+  top: 80px;
+  left: 20px;
+  width: 220px;
+  background: #1e3a8a;
+  border-radius: 12px;
+  padding: 12px;
+  color: white;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.menu button {
+  width: 100%;
+  padding: 10px;
+  background: none;
+  border: none;
+  color: white;
+  text-align: left;
+  cursor: pointer;
+}
+
+.menu button:hover {
+  background: #3b82f6;
+}
+
+/* ===== CARD ===== */
+.card {
+  width: 90%;
+  min-width: 900px;
+  background: white;
+  border-radius: 22px;
+  padding: 30px;   
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+}
+
+
+h2 {
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
+/* ===== INPUT AREA ===== */
+.input-area {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+input,
+select {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+}
+
+.add-btn {
+  background: #111827;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+/* ===== FILTERS ===== */
+.filters {
+  display: flex;
+  gap: 6px;
+  margin-top: 15px;
+}
+
+.filter-btn {
+  flex: 1;
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.filter-btn.active {
+  background: #2563eb;
+  color: white;
+}
+
+/* ===== LIST ===== */
+ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f8fafc;
+  padding: 12px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+li.completed {
+  text-decoration: line-through;
+  color: gray;
+}
+
+/* ===== PRIORITY DOT ===== */
+.priority-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.priority-dot.low {
+  background: #22c55e;
+}
+
+.priority-dot.medium {
+  background: #f59e0b;
+}
+
+.priority-dot.high {
+  background: #ef4444;
+}
+
+/* ===== ACTION BUTTONS ===== */
+.todo-actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* ===== AUTH ===== */
+.auth-card {
+  background: white;
+  padding: 25px;
+  width: 320px;
+  border-radius: 15px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  text-align: center;
+}
+
+.auth-card input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-primary {
+  flex: 1;
+  padding: 10px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+}
+
+.btn-secondary {
+  flex: 1;
+  padding: 10px;
+  background: #6b7280;
+  color: white;
+  border: none;
+  border-radius: 8px;
+}
+/* ===== DARK MODE ===== */
+body.dark {
+  background: #111827;
+  color: #f8fafc;
+}
+
+body.dark .card {
+  background: #1f2937;
+  color: #f8fafc;
+}
+
+body.dark input,
+body.dark select {
+  background: #374151;
+  color: #f8fafc;
+  border: 1px solid #6b7280;
+}
+
+body.dark .auth-card {
+  background: #1f2937;
+  color: #f8fafc;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+
+body.dark .menu {
+  background: #1f2937;
+}
+
+body.dark .menu button:hover {
+  background: #2563eb;
+}
+
+body.dark .add-btn,
+body.dark .btn-primary,
+body.dark .btn-secondary,
+body.dark .filter-btn.active {
+  background: #2563eb;
+  color: white;
+}
+
+body.dark li {
+  background: #374151;
+  color: #f8fafc;
+}
+
+body.dark li.completed {
+  color: #9ca3af;
+}
