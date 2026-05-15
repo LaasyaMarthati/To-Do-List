@@ -66,11 +66,8 @@ A full-stack task management web application with secure authentication, premium
 
 ### Deployment & DevOps
 - Containerized using Docker
+- - Production-ready project structure
 - `.dockerignore` configured
-- `.gitignore` configured
-- Environment variable setup using `.env`
-- Production-ready project structure
-
 ---
 
 # Tech Stack Used
