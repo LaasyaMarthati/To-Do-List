@@ -18,7 +18,7 @@ import Razorpay from "razorpay";
 dotenv.config();
 
 const app = express();
-const JWT_SECRET = process.env.JWT_SECRET || "secret123";
+const JWT_SECRET = process.env.JWT_SECRET;
 const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
   key_secret: process.env.RAZORPAY_KEY_SECRET,
@@ -39,7 +39,7 @@ app.use(cors({
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use(session({
-  secret: "keyboardcat",
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false
 }));
