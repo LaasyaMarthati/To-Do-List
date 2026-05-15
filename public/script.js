@@ -477,7 +477,7 @@ if (buyBtn) {
     const order = await orderRes.json();
 
     const options = {
-      key: "rzp_test_Sg7cT3gAO0mOZD",
+      key: enteryourrazpaykey,
       amount: order.amount,
       currency: order.currency,
       order_id: order.id,
